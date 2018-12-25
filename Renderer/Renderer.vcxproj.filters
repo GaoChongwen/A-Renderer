@@ -27,12 +27,6 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="math\Mat4.cpp">
-      <Filter>源文件\math</Filter>
-    </ClCompile>
-    <ClCompile Include="math\Vec.cpp">
-      <Filter>源文件\math</Filter>
-    </ClCompile>
     <ClCompile Include="paint\Canvas.cpp">
       <Filter>源文件\paint</Filter>
     </ClCompile>
@@ -45,17 +39,14 @@
     <ClCompile Include="app\CApp.cpp">
       <Filter>源文件\app</Filter>
     </ClCompile>
+    <ClCompile Include="math\Mat4.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vec.cpp">
+      <Filter>源文件\math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="math\Mat4.h">
-      <Filter>源文件\math</Filter>
-    </ClInclude>
-    <ClInclude Include="math\MathTool.h">
-      <Filter>源文件\math</Filter>
-    </ClInclude>
-    <ClInclude Include="math\Vec.h">
-      <Filter>源文件\math</Filter>
-    </ClInclude>
     <ClInclude Include="paint\Canvas.h">
       <Filter>源文件\paint</Filter>
     </ClInclude>
@@ -70,6 +61,15 @@
     </ClInclude>
     <ClInclude Include="app\Macro.h">
       <Filter>源文件\app</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Mat4.h">
+      <Filter>源文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\MathTool.h">
+      <Filter>源文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vec.h">
+      <Filter>源文件\math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

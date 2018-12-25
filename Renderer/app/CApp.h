@@ -2,7 +2,7 @@
 // [Include Section]
 // ============================================================================
 #include <SDL.h>
-
+#include "paint/Canvas.h"
 
 // ============================================================================
 // [CApp]
@@ -33,6 +33,7 @@ private:
 	SDL_Window*		window;
 	SDL_Renderer*	renderer;
 
+	Canvas* _canvas;
 	// Initialize application
 	int 			OnInit();
 

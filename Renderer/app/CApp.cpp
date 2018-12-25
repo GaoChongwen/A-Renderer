@@ -13,9 +13,7 @@ const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
 
-CApp::CApp():running(false)
-{
-}
+CApp::CApp():window(nullptr),renderer(nullptr),_canvas(nullptr), running(false){}
 
 CApp::~CApp()
 {
@@ -29,6 +27,14 @@ int CApp::OnInit()
 		std::cout<<(stderr, "SDL_Init() failed: %s\n", SDL_GetError())<<std::endl;
 		return APP_FAILED;
 	}
+
+	// 设置画布
+	_canvas = new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
+	
+	SDL_Surface* surface = SDL_GetWindowSurface(window);
+
+	_canvas->setSurface(surface);
+
 	// 设置窗口
 	window = SDL_CreateWindow(TITLE,
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -106,6 +112,10 @@ void CApp::OnUpdate()
 void CApp::OnRender()
 {
 	SDL_RenderClear(renderer);
+
+	_canvas->update();
+
+	SDL_UpdateWindowSurface(window);
 
 	// Do your drawing here
 

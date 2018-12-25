@@ -4,7 +4,7 @@
 #include <cmath>
 #include <iostream>
 #include "MathTool.h"
-
+// ∂•µ„¿‡
 class Vec3{
 public:
 	double x;
@@ -14,6 +14,8 @@ public:
 	Vec3(double x = 0.0f, double y = 0.0f, double z = 0.0f);
 
 	double length() const;
+
+	double normalize() const;
 
 	double dot(const Vec3 &other) const;
 
