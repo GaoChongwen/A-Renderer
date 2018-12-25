@@ -117,7 +117,5 @@ void CApp::OnRender()
 
 	SDL_UpdateWindowSurface(window);
 
-	// Do your drawing here
-
 	SDL_RenderPresent(renderer);
 }
