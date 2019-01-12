@@ -127,7 +127,7 @@ void Canvas::drawTrianglesFromVerts(const vector<Vertex> &verts)
         VertexOut vOut1 = _Vertex2VertexOut(verts.at(i));
         VertexOut vOut2 = _Vertex2VertexOut(verts.at(i + 1));
         VertexOut vOut3 = _Vertex2VertexOut(verts.at(i + 2));
-        Triangle &tri = triangle(vOut1, vOut2, vOut3);
+        Triangle tri = Triangle(vOut1, vOut2, vOut3);
         // processTriangle(vOut1, vOut2, vOut3);
         processTriangle(tri);
     }
@@ -140,11 +140,11 @@ void Canvas::drawElement(const vector<Vertex> &verts, const vector<int> &indice)
         // const Vertex &v1 = verts.at(indice.at(i));
         // const Vertex &v2 = verts.at(indice.at(i + 1));
         // const Vertex &v3 = verts.at(indice.at(i + 2));
-        VertexOut vOut1 = _Vertex2VertexOut(indice.at(i));
-        VertexOut vOut2 = _Vertex2VertexOut(indice.at(i + 1));
-        VertexOut vOut3 = _Vertex2VertexOut(indice.at(i + 2));
+        VertexOut vOut1 = _Vertex2VertexOut(verts.at(indice.at(i)));
+        VertexOut vOut2 = _Vertex2VertexOut(verts.at(indice.at(i+1)));
+        VertexOut vOut3 = _Vertex2VertexOut(verts.at(indice.at(i+2)));
         //processTriangle(vOut1, vOut2, vOut3);
-        Triangle &tri = triangle(vOut1, vOut2, vOut3);
+        Triangle tri = Triangle(vOut1, vOut2, vOut3);
         processTriangle(tri);
 
     }
@@ -208,9 +208,9 @@ Vec3 Canvas::getTriNormal(const Triangle &tri) const
     const VertexOut &vOut2 = tri.v2;
     const VertexOut &vOut3 = tri.v3;
 
-    v1.normal = normal;
-    v2.normal = normal;
-    v3.normal = normal;
+    vOut1.normal = normal;
+    vOut2.normal = normal;
+    vOut3.normal = normal;
  }
 
 
@@ -222,7 +222,7 @@ bool Canvas::isCulling(const Triangle &tri) const
     }
 
     const VertexOut &vOut1 = tri.v1;
-    const Vec3 &pos1 = v1.posWorld;
+    const Vec3 &pos1 = vOut1.posWorld;
     // const Vec3 &pos2 = v2.posWorld;
     // const Vec3 &pos3 = v3.posWorld;
 
