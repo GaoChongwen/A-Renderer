@@ -231,3 +231,4 @@ bool Mat4::operator == (const Mat4 &other) const {
     }
     return true;
 }
+
