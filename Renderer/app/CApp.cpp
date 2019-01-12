@@ -28,6 +28,12 @@ int CApp::OnInit()
 		return APP_FAILED;
 	}
 
+	// 设置窗口
+	window = SDL_CreateWindow(TITLE,
+		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		SCREEN_WIDTH, SCREEN_HEIGHT,
+		SDL_WINDOW_SHOWN);
+
 	// 设置画布
 	_canvas = new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT);
 	
@@ -35,11 +41,7 @@ int CApp::OnInit()
 
 	_canvas->setSurface(surface);
 
-	// 设置窗口
-	window = SDL_CreateWindow(TITLE,
-		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-		SCREEN_WIDTH, SCREEN_HEIGHT,
-		SDL_WINDOW_SHOWN);
+	
 
 	if (window != NULL) {
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);

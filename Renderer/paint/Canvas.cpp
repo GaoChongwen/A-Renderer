@@ -18,7 +18,7 @@ Canvas::Canvas(int width, int height) :_surface(nullptr),_width(width),_height(h
 
 void Canvas::clear() {
 	memset(getPixels(), 0, sizeof(uint32_t) * _width * _height);
-//	std::fill(_depth, _depth + _bufferSize, 1);
+	//std::fill(_depth, _depth + _bufferSize, 1);
 }
 
 void Canvas::update() {
@@ -44,12 +44,12 @@ void Canvas::render() {
 	//}
 
 	// 画线
-	Vertex v1(Vec3(-1, -1, -1), Color(1, 0, 0, 0));
+	Vertex v1(Vec3(-0.5, -0.5, -0.5), Color(1, 0, 0, 0));
 	Vertex v2(Vec3(0, 1, 1), Color(0, 1, 0, 0));
-	Vertex v3(Vec3(1, -0.5, 1), Color(0, 0, 1, 0));
+	Vertex v3(Vec3(1, -0.5, 1), Color(1, 0, 1, 0));
 
 	drawLine(v2, v1);
-	drawLine(v2, v3);
+	// drawLine(v2, v3);
 	drawLine(v3, v1);
 
 }
@@ -79,6 +79,7 @@ void Canvas::putPixel(int px, int py, const Color &color) {
 	pixels[index] = color.uint32();
 }
 
+// 画点
 void Canvas::drawPoint(const Vertex &vert) {
 	drawPoint(vert.pos.x, vert.pos.y, vert.pos.z, vert.color);
 }
@@ -98,6 +99,7 @@ void Canvas::drawPoint(double x, double y, double z, const Color &color) {
 	drawPixel(px, py, z, color);
 }
 
+// 线性插值画线
 void Canvas::drawLine(const Vertex &vert1, const Vertex &vert2) {
 
 	const Vertex * pVert1 = &vert1;
