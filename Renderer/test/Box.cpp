@@ -122,6 +122,6 @@ void Box::init() {
 void Box::draw(Ldouble dt) {
     begin(dt);
     Canvas::getInstance()->setTexture(_texture);
-    Canvas::getInstance()->drawArray(_vertice);
+    Canvas::getInstance()->drawTrianglesFromVerts(_vertice);
     end();
 }

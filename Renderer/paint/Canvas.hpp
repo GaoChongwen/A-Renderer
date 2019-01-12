@@ -60,8 +60,10 @@ public:
     
     void unlock();
     
-    void fixNormal(const VertexOut &v1 , const VertexOut &v2 , const VertexOut &v3) const;
+    // void fixNormal(const VertexOut &v1 , const VertexOut &v2 , const VertexOut &v3) const;
     
+    void fixNormal(const Triangle &tri) const;
+
     void lineBresenham(const VertexOut &v1 , const VertexOut &v2);
     
     void scanLineFill(const VertexOut &v1 , const VertexOut &v2 , int yIndex);
@@ -91,40 +93,37 @@ public:
         return _drawMode;
     }
     
-    void drawArray(const vector<Vertex> &verts);
+    void drawTrianglesFromVerts(const vector<Vertex> &verts);
     
     void drawElement(const vector<Vertex> &verts , const vector<int> &indice);
     
-    bool isCulling(const VertexOut &v1 , const VertexOut &v2 , const VertexOut &v3) const;
+    // bool isCulling(const VertexOut &v1 , const VertexOut &v2 , const VertexOut &v3) const;
+    bool isCulling(const Triangle &tri) const;
     
-    VertexOut handleVertex(const Vertex &vert) const;
+    VertexOut _Vertex2VertexOut(const Vertex &vert) const;
     
     void transformToScrn(VertexOut &vert) const;
+
+    void transformTriToScrn(Triangle &tri) const;
     
-    void processTriangle(const Vertex &v1 , const Vertex &v2 , const Vertex &v3);
+    // void processTriangle(const Vertex &v1 , const Vertex &v2 , const Vertex &v3);
+    // void processTriangle(VertexOut &vOut1 , VertexOut &vOut2 , VertexOut &vOut3);
+    void processTriangle(Triangle& tri);
     
-    void _drawTriangle(VertexOut &v1 , VertexOut &v2 , VertexOut &v3);
+    // Vec3 getPanelNormal(const VertexOut &v1, const VertexOut &v2, const VertexOut &v3) const;
+    Vec3 getTriNormal(const Triangle &tri) const;
+
+    // void _drawTriangle(VertexOut &v1 , VertexOut &v2 , VertexOut &v3);
+    void _drawTriangle(Triangle &tri);
+
+    void _drawTriangleFrame(Triangle &tri);
     
-    void _triangleRasterize(const VertexOut &v1 , const VertexOut &v2 , const VertexOut &v3);
+    // void _triangleRasterize(const VertexOut &v1 , const VertexOut &v2 , const VertexOut &v3);
     
-    /**
-     *     1
-     *
-     *  3       2
-     * @param v1 [description]
-     * @param v2 [description]
-     * @param v3 [description]
-     */
+    void _triangleRasterize(Triangle &tri);
+
     void _triangleTopRasterize(const VertexOut &v1 , const VertexOut &v2 , const VertexOut &v3);
     
-    /**
-     * 1     2
-     *
-     *     3
-     * @param v1 [description]
-     * @param v2 [description]
-     * @param v3 [description]
-     */
     void _triangleBottomRasterize(const VertexOut &v1 , const VertexOut &v2 , const VertexOut &v3);
     
     void doClippingInCvv(vector<Triangle> &triList) const;
