@@ -1,22 +1,73 @@
-//
-//  Vertex.cpp
-//  Renderer
-//  Lipeng Liang
-//  2018/12/24
-//
+#include "Vertex.hpp"
 
-#include "Vertex.h"
+Vertex::Vertex(Vec3 pos , Color color, Vec3 normal , Vec2 tex):
+pos(pos),
+normal(normal),
+tex(tex),
+color(color){
 
-Vertex::Vertex(Vec3 pos, Color color, Vec3 normal, double u, double v) :pos(pos),normal(normal),u(u),v(v),color(color) {}
-
-Vertex Vertex::interpolate(Vertex vertex, double factor) {
-	Vec3 p = pos.interpolate(vertex.pos, factor);
-	Vec3 nor = normal.interpolate(vertex.normal, factor);
-	float tu = u + (vertex.u - u) * factor;
-	float tv = v + (vertex.v - v) * factor;
-	Color c = vertex.color.interpolate(vertex.color, factor);
-	return Vertex(p, c, nor, tu, tv);
 }
+
+
+Vertex Vertex::interpolate(const Vertex &vertex, Ldouble factor) const {
+    Vec3 p = pos.interpolate(vertex.pos , factor);
+    Vec3 nor = normal.interpolate(vertex.normal, factor);
+    Vec2 t = tex.interpolate(vertex.tex , factor);
+    Color c = color.interpolate(vertex.color, factor);
+    return Vertex(p , c , nor , t);
+}
+
 void Vertex::transform(const Mat4 &mat4) {
-	pos = mat4.transform(pos);
+//    pos = mat4.transform(pos);
 }
+
+VertexOut VertexOut::interpolateEarly(const VertexOut &target, Ldouble factor) const {
+    VertexOut ret;
+    ret.posWorld = posWorld.interpolate(target.posWorld, factor);
+    ret.pos = pos.interpolate(target.pos , factor);
+    ret.normal = normal.interpolate(target.normal, factor);
+    ret.color = color.interpolate(target.color, factor);
+    ret.posTrans = posTrans.interpolate(target.posTrans , factor);
+    ret.tex = tex.interpolate(target.tex , factor);
+    return ret;
+}
+
+Ldouble VertexOut::interpolateZ(const VertexOut &target, Ldouble factor) const {
+    if (MathUtil::equal(oneDivZ , target.oneDivZ)) {
+        return 1 / oneDivZ;
+    }
+    Ldouble _oneDivZ;
+    _oneDivZ = MathUtil::interpolate(oneDivZ , target.oneDivZ , factor);
+    return 1 / _oneDivZ;
+}
+
+VertexOut VertexOut::interpolate(const VertexOut &target, Ldouble factor) const {
+    VertexOut ret;
+    
+    ret.pos = pos.interpolate(target.pos, factor);
+    ret.oneDivZ = MathUtil::interpolate(oneDivZ , target.oneDivZ , factor);
+    
+    Ldouble z1 = getZ();
+    Ldouble z = ret.getZ();
+    Ldouble z2 = target.getZ();
+    Ldouble cfactor;
+    //透视校正
+    if (z1 == z2) {
+        cfactor = factor;
+    } else {
+        cfactor = (z - z1) / (z2 - z1);
+    }
+    ret.pos.z = MathUtil::interpolate(pos.z , target.pos.z, cfactor);
+    ret.posWorld = posWorld.interpolate(target.posWorld, cfactor);
+    ret.normal = normal.interpolate(target.normal , cfactor);
+    ret.color = color.interpolate(target.color, cfactor);
+    ret.posTrans = posTrans.interpolate(target.posTrans , cfactor);
+    ret.tex = tex.interpolate(target.tex , cfactor);
+    
+    return ret;
+}
+
+
+
+
+
