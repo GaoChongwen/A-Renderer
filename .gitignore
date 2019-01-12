@@ -344,5 +344,8 @@ healthchecksdb
 SDL2-2.0.9/
 SDL2.dll
 
-# for .vcxproj
-# *.vcxproj
+# for .a
+*.a
+
+# for .zip
+*.zip
