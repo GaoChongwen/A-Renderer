@@ -106,20 +106,14 @@ public:
 
     void transformTriToScrn(Triangle &tri) const;
     
-    // void processTriangle(const Vertex &v1 , const Vertex &v2 , const Vertex &v3);
-    // void processTriangle(VertexOut &vOut1 , VertexOut &vOut2 , VertexOut &vOut3);
     void processTriangle(Triangle& tri);
     
-    // Vec3 getPanelNormal(const VertexOut &v1, const VertexOut &v2, const VertexOut &v3) const;
     Vec3 getTriNormal(const Triangle &tri) const;
 
-    // void _drawTriangle(VertexOut &v1 , VertexOut &v2 , VertexOut &v3);
     void _drawTriangle(Triangle &tri);
 
     void _drawTriangleFrame(Triangle &tri);
-    
-    // void _triangleRasterize(const VertexOut &v1 , const VertexOut &v2 , const VertexOut &v3);
-    
+        
     void _triangleRasterize(Triangle &tri);
 
     void _triangleTopRasterize(const VertexOut &v1 , const VertexOut &v2 , const VertexOut &v3);
@@ -140,6 +134,18 @@ public:
     
     void _doClppingInCvvAgainstBottomPlane(vector<Triangle> &triList) const;
     
+    vector<bool> _getbOutListForNearPlane(Triangle &tri);
+
+    vector<bool> _getbOutListForFarPlane(Triangle &tri);
+    
+    vector<bool> _getbOutListForRightPlane(Triangle &tri);
+    
+    vector<bool> _getbOutListForLeftPlane(Triangle &tri);
+
+    vector<bool> _getbOutListForTopPlane(Triangle &tri);
+    
+    vector<bool> _getbOutListForBottomPlane(Triangle &tri);
+
     void putPixel(int px , int py , const Color &color);
     
     inline bool isPassDepth(int px , int py , Ldouble z) {

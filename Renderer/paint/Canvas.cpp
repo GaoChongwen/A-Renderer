@@ -82,29 +82,7 @@ void Canvas::render(double dt)
         auto node = _node.at(i);
         node->draw(dt);
     }
-    //     Ldouble z = -1;
-    //     auto d =2;
-    //     Vec3 p1 = Vec3(-1 ,0 ,z);
-    //     Vec3 p2 = Vec3(1 , 2 ,z - d);
-    //     Vec3 p3 = Vec3(1 , 0, z);
-    //
-    //     Vec3 p4 = Vec3(-1 , 2 , z- d);
-    //
-    //     auto camera = Camera::getInstance();
-    //
-    //     auto p = camera->getProjectionMat();
-    //
-    //     _shader->setProjectionMat(p);
-    //     _shader->setViewMat(camera->getViewMat());
-    //
-    //     Vertex v1(p1 , Color(1 , 0 , 0 , 0));
-    //     Vertex v2(p2 , Color(0 , 1 , 0 , 0));
-    //     Vertex v3(p3 , Color(0 , 1 , 0 , 0));
-    //     Vertex v4(p4 , Color(1 , 0 , 0 , 0));
-    //
-    //
-    //     drawTriangle(v1 , v2 , v3);
-    //     drawTriangle(v1 , v2 , v4);
+
 }
 
 void Canvas::lock()
@@ -121,14 +99,11 @@ void Canvas::drawTrianglesFromVerts(const vector<Vertex> &verts)
 {
     for (int i = 0; i < verts.size(); i = i + 3)
     {
-        // const Vertex &v1 = verts.at(i);
-        // const Vertex &v2 = verts.at(i + 1);
-        // const Vertex &v3 = verts.at(i + 2);
         VertexOut vOut1 = _Vertex2VertexOut(verts.at(i));
         VertexOut vOut2 = _Vertex2VertexOut(verts.at(i + 1));
         VertexOut vOut3 = _Vertex2VertexOut(verts.at(i + 2));
+        
         Triangle tri = Triangle(vOut1, vOut2, vOut3);
-        // processTriangle(vOut1, vOut2, vOut3);
         processTriangle(tri);
     }
 }
@@ -137,32 +112,15 @@ void Canvas::drawElement(const vector<Vertex> &verts, const vector<int> &indice)
 {
     for (int i = 0; i < indice.size(); i = i + 3)
     {
-        // const Vertex &v1 = verts.at(indice.at(i));
-        // const Vertex &v2 = verts.at(indice.at(i + 1));
-        // const Vertex &v3 = verts.at(indice.at(i + 2));
         VertexOut vOut1 = _Vertex2VertexOut(verts.at(indice.at(i)));
         VertexOut vOut2 = _Vertex2VertexOut(verts.at(indice.at(i+1)));
         VertexOut vOut3 = _Vertex2VertexOut(verts.at(indice.at(i+2)));
-        //processTriangle(vOut1, vOut2, vOut3);
+
         Triangle tri = Triangle(vOut1, vOut2, vOut3);
         processTriangle(tri);
 
     }
 }
-
-// Vec3 Canvas::getPanelNormal(const VertexOut &v1, const VertexOut &v2, const VertexOut &v3) const
-// {
-//     const Vec3 &pos1 = v1.posWorld;
-//     const Vec3 &pos2 = v2.posWorld;
-//     const Vec3 &pos3 = v3.posWorld;
-
-//     Vec3 v12 = pos2 - pos1;
-//     Vec3 v23 = pos3 - pos2;
-
-//     Vec3 normal = v12.cross(v23);
-
-//     return normal;
-// }
 
 Vec3 Canvas::getTriNormal(const Triangle &tri) const
 {
@@ -181,25 +139,6 @@ Vec3 Canvas::getTriNormal(const Triangle &tri) const
 
     return normal;
 }
-
-
-
-// void Canvas::fixNormal(const VertexOut &v1, const VertexOut &v2, const VertexOut &v3) const
-// {
-//     // const Vec3 &pos1 = v1.posWorld;
-//     // const Vec3 &pos2 = v2.posWorld;
-//     // const Vec3 &pos3 = v3.posWorld;
-
-//     // Vec3 v12 = pos2 - pos1;
-//     // Vec3 v23 = pos3 - pos2;
-
-//     // Vec3 normal = v12.cross(v23);
-//     Vec3 normal = this->getPanelNormal(v1,v2,v3);
-
-//     v1.normal = normal;
-//     v2.normal = normal;
-//     v3.normal = normal;
-// }
 
  void Canvas::fixNormal(const Triangle& tri) const
  {
@@ -223,13 +162,6 @@ bool Canvas::isCulling(const Triangle &tri) const
 
     const VertexOut &vOut1 = tri.v1;
     const Vec3 &pos1 = vOut1.posWorld;
-    // const Vec3 &pos2 = v2.posWorld;
-    // const Vec3 &pos3 = v3.posWorld;
-
-    // Vec3 v12 = pos2 - pos1;
-    // Vec3 v23 = pos3 - pos2;
-
-    // Vec3 crs = v12.cross(v23);
 
     Vec3 normal = this->getTriNormal(tri);
 
@@ -248,33 +180,25 @@ bool Canvas::isCulling(const Triangle &tri) const
 
 void Canvas::processTriangle(Triangle &tri)
 {
-    // VertexOut vOut1 = _Vertex2VertexOut(v1);
-    // VertexOut vOut2 = _Vertex2VertexOut(v2);
-    // VertexOut vOut3 = _Vertex2VertexOut(v3);
-
-    // if (isCulling(vOut1, vOut2, vOut3))
-    // {
-    //     return;
-    // }
     if (isCulling(tri)){
         return;
     }
     if (_normalFix)
     {
-        // fixNormal(vOut1, vOut2, vOut3);
         fixNormal(tri);
     }
-    // Triangle &tri = triangle(vOut1, vOut2, vOut3);
+    
     Triangle triangle = tri;
     vector<Triangle> triangleList = {triangle};
 
     doClippingInCvv(triangleList);
 
-    for (int i = 0; i < triangleList.size(); ++i)
-    {
-        Triangle &tri = triangleList.at(i);
-        _drawTriangle(tri);
-    }
+    _drawTriangle(tri);
+    // for (int i = 0; i < triangleList.size(); ++i)
+    // {
+    //     Triangle &tri = triangleList.at(i);
+    //     _drawTriangle(tri);
+    // }
 }
 
 void Canvas::transformTriToScrn(Triangle &tri) const
@@ -293,14 +217,6 @@ void Canvas::_drawTriangleFrame(Triangle &tri){
 
 void Canvas::_drawTriangle(Triangle &tri)
 {
-    // VertexOut& vOut1 = tri.v1;
-    // VertexOut& vOut2 = tri.v2;
-    // VertexOut& vOut3 = tri.v3;
-
-    // transformToScrn(vOut1);
-    // transformToScrn(vOut2);
-    // transformToScrn(vOut3);
-
     transformTriToScrn(tri);
     
     if (_drawMode == Fill)
@@ -309,9 +225,6 @@ void Canvas::_drawTriangle(Triangle &tri)
     }
     else if (_drawMode == Frame)
     {
-        // lineBresenham(vOut1, vOut2);
-        // lineBresenham(vOut1, vOut3);
-        // lineBresenham(vOut3, vOut2);
         _drawTriangleFrame(tri);
     }
 }
@@ -331,14 +244,15 @@ void Canvas::_doClppingInCvvAgainstLeftPlane(vector<Triangle> &triList) const
     for (auto iter = triList.begin(); iter != triList.end(); /*do nothing*/)
     {
         Triangle &tri = *iter;
-        Vec4 p1 = tri.v1.pos;
-        Vec4 p2 = tri.v2.pos;
-        Vec4 p3 = tri.v3.pos;
-        bool bOut1 = p1.x < -p1.w;
-        bool bOut2 = p2.x < -p2.w;
-        bool bOut3 = p3.x < -p3.w;
+        // Vec4 p1 = tri.v1.pos;
+        // Vec4 p2 = tri.v2.pos;
+        // Vec4 p3 = tri.v3.pos;
+        // bool bOut1 = p1.x < -p1.w;
+        // bool bOut2 = p2.x < -p2.w;
+        // bool bOut3 = p3.x < -p3.w;
         vector<VertexOut> vertice = {tri.v1, tri.v2, tri.v3};
-        vector<bool> bList = {bOut1, bOut2, bOut3};
+        // vector<bool> bList = {bOut1, bOut2, bOut3};
+        vector<bool> bList = _getbOutListForLeftPlane(tri);
         int outNum = 0;
         for (int i = 0; i < bList.size(); ++i)
         {
@@ -444,14 +358,15 @@ void Canvas::_doClppingInCvvAgainstRightPlane(vector<Triangle> &triList) const
     for (auto iter = triList.begin(); iter != triList.end(); /*do nothing*/)
     {
         Triangle &tri = *iter;
-        Vec4 p1 = tri.v1.pos;
-        Vec4 p2 = tri.v2.pos;
-        Vec4 p3 = tri.v3.pos;
-        bool bOut1 = p1.x > p1.w;
-        bool bOut2 = p2.x > p2.w;
-        bool bOut3 = p3.x > p3.w;
+        // Vec4 p1 = tri.v1.pos;
+        // Vec4 p2 = tri.v2.pos;
+        // Vec4 p3 = tri.v3.pos;
+        // bool bOut1 = p1.x > p1.w;
+        // bool bOut2 = p2.x > p2.w;
+        // bool bOut3 = p3.x > p3.w;
         vector<VertexOut> vertice = {tri.v1, tri.v2, tri.v3};
-        vector<bool> bList = {bOut1, bOut2, bOut3};
+        // vector<bool> bList = {bOut1, bOut2, bOut3};
+        vector<bool> bList = _getbOutListForRightPlane(tri);
         int outNum = 0;
         for (int i = 0; i < bList.size(); ++i)
         {
@@ -557,14 +472,16 @@ void Canvas::_doClppingInCvvAgainstTopPlane(vector<Triangle> &triList) const
     for (auto iter = triList.begin(); iter != triList.end(); /*do nothing*/)
     {
         Triangle &tri = *iter;
-        Vec4 p1 = tri.v1.pos;
-        Vec4 p2 = tri.v2.pos;
-        Vec4 p3 = tri.v3.pos;
-        bool bOut1 = p1.y > p1.w;
-        bool bOut2 = p2.y > p2.w;
-        bool bOut3 = p3.y > p3.w;
+        // Vec4 p1 = tri.v1.pos;
+        // Vec4 p2 = tri.v2.pos;
+        // Vec4 p3 = tri.v3.pos;
+        // bool bOut1 = p1.y > p1.w;
+        // bool bOut2 = p2.y > p2.w;
+        // bool bOut3 = p3.y > p3.w;
         vector<VertexOut> vertice = {tri.v1, tri.v2, tri.v3};
-        vector<bool> bList = {bOut1, bOut2, bOut3};
+        // vector<bool> bList = {bOut1, bOut2, bOut3};
+
+        vector<bool> bList = _getbOutListForTopPlane(tri);
         int outNum = 0;
         for (int i = 0; i < bList.size(); ++i)
         {
@@ -670,14 +587,15 @@ void Canvas::_doClppingInCvvAgainstBottomPlane(vector<Triangle> &triList) const
     for (auto iter = triList.begin(); iter != triList.end(); /*do nothing*/)
     {
         Triangle &tri = *iter;
-        Vec4 p1 = tri.v1.pos;
-        Vec4 p2 = tri.v2.pos;
-        Vec4 p3 = tri.v3.pos;
-        bool bOut1 = p1.y < -p1.w;
-        bool bOut2 = p2.y < -p2.w;
-        bool bOut3 = p3.y < -p3.w;
+        // Vec4 p1 = tri.v1.pos;
+        // Vec4 p2 = tri.v2.pos;
+        // Vec4 p3 = tri.v3.pos;
+        // bool bOut1 = p1.y < -p1.w;
+        // bool bOut2 = p2.y < -p2.w;
+        // bool bOut3 = p3.y < -p3.w;
         vector<VertexOut> vertice = {tri.v1, tri.v2, tri.v3};
-        vector<bool> bList = {bOut1, bOut2, bOut3};
+        // vector<bool> bList = {bOut1, bOut2, bOut3};
+        vector<bool> bList = _getbOutListForBottomPlane(tri);
         int outNum = 0;
         for (int i = 0; i < bList.size(); ++i)
         {
@@ -783,14 +701,15 @@ void Canvas::_doClppingInCvvAgainstFarPlane(vector<Triangle> &triList) const
     for (auto iter = triList.begin(); iter != triList.end(); /*do nothing*/)
     {
         Triangle &tri = *iter;
-        Vec4 p1 = tri.v1.pos;
-        Vec4 p2 = tri.v2.pos;
-        Vec4 p3 = tri.v3.pos;
-        bool bOut1 = p1.z > p1.w;
-        bool bOut2 = p2.z > p2.w;
-        bool bOut3 = p3.z > p3.w;
+        // Vec4 p1 = tri.v1.pos;
+        // Vec4 p2 = tri.v2.pos;
+        // Vec4 p3 = tri.v3.pos;
+        // bool bOut1 = p1.z > p1.w;
+        // bool bOut2 = p2.z > p2.w;
+        // bool bOut3 = p3.z > p3.w;
         vector<VertexOut> vertice = {tri.v1, tri.v2, tri.v3};
-        vector<bool> bList = {bOut1, bOut2, bOut3};
+        // vector<bool> bList = {bOut1, bOut2, bOut3};
+        vector<bool> bList = _getbOutListForFarPlane(tri);
         int outNum = 0;
         for (int i = 0; i < bList.size(); ++i)
         {
@@ -897,14 +816,15 @@ void Canvas::_doClppingInCvvAgainstNearPlane(vector<Triangle> &triList) const
     for (auto iter = triList.begin(); iter != triList.end(); /*do nothing*/)
     {
         Triangle &tri = *iter;
-        Vec4 p1 = tri.v1.pos;
-        Vec4 p2 = tri.v2.pos;
-        Vec4 p3 = tri.v3.pos;
-        bool bOut1 = p1.z < 0;
-        bool bOut2 = p2.z < 0;
-        bool bOut3 = p3.z < 0;
+        // Vec4 p1 = tri.v1.pos;
+        // Vec4 p2 = tri.v2.pos;
+        // Vec4 p3 = tri.v3.pos;
+        // bool bOut1 = p1.z < 0;
+        // bool bOut2 = p2.z < 0;
+        // bool bOut3 = p3.z < 0;
         vector<VertexOut> vertice = {tri.v1, tri.v2, tri.v3};
-        vector<bool> bList = {bOut1, bOut2, bOut3};
+        vector<bool> bList = _getbOutListForNearPlane(tri);
+        // vector<bool> bList = {bOut1, bOut2, bOut3};
         int outNum = 0;
         for (int i = 0; i < bList.size(); ++i)
         {
@@ -997,6 +917,95 @@ void Canvas::_doClppingInCvvAgainstNearPlane(vector<Triangle> &triList) const
             iter = triList.erase(iter);
         }
     }
+}
+
+vector<bool> Canvas::_getbOutListForNearPlane(Triangle &tri)
+{
+    Vec4 p1 = tri.v1.pos;
+    Vec4 p2 = tri.v2.pos;
+    Vec4 p3 = tri.v3.pos;
+
+    bool bOut1 = p1.z < 0;
+    bool bOut2 = p2.z < 0;
+    bool bOut3 = p3.z < 0;
+
+    vector<bool> bList = {bOut1, bOut2, bOut3};
+
+    return bList;
+}
+
+vector<bool> Canvas::_getbOutListForFarPlane(Triangle &tri)
+{
+    Vec4 p1 = tri.v1.pos;
+    Vec4 p2 = tri.v2.pos;
+    Vec4 p3 = tri.v3.pos;
+    
+    bool bOut1 = p1.z > p1.w;
+    bool bOut2 = p2.z > p2.w;
+    bool bOut3 = p3.z > p3.w;
+
+    vector<bool> bList = {bOut1, bOut2, bOut3};
+
+    return bList;
+}
+
+vector<bool> Canvas::_getbOutListForRightPlane(Triangle &tri){
+    Vec4 p1 = tri.v1.pos;
+    Vec4 p2 = tri.v2.pos;
+    Vec4 p3 = tri.v3.pos;
+
+    bool bOut1 = p1.x > p1.w;
+    bool bOut2 = p2.x > p2.w;
+    bool bOut3 = p3.x > p3.w;
+
+    vector<bool> bList = {bOut1, bOut2, bOut3};
+
+    return bList;    
+}
+
+vector<bool> Canvas::_getbOutListForLeftPlane(Triangle &tri)
+{
+    Vec4 p1 = tri.v1.pos;
+    Vec4 p2 = tri.v2.pos;
+    Vec4 p3 = tri.v3.pos;
+
+    bool bOut1 = p1.x < -p1.w;
+    bool bOut2 = p2.x < -p2.w;
+    bool bOut3 = p3.x < -p3.w;
+
+    vector<bool> bList = {bOut1, bOut2, bOut3};
+
+    return bList;
+}
+
+vector<bool> Canvas::_getbOutListForTopPlane(Triangle &tri)
+{
+    Vec4 p1 = tri.v1.pos;
+    Vec4 p2 = tri.v2.pos;
+    Vec4 p3 = tri.v3.pos;
+
+    bool bOut1 = p1.y > p1.w;
+    bool bOut2 = p2.y > p2.w;
+    bool bOut3 = p3.y > p3.w;
+
+    vector<bool> bList = {bOut1, bOut2, bOut3};
+
+    return bList;
+}
+
+vector<bool> Canvas::_getbOutListForBottomPlane(Triangle &tri)
+{
+    Vec4 p1 = tri.v1.pos;
+    Vec4 p2 = tri.v2.pos;
+    Vec4 p3 = tri.v3.pos;
+
+    bool bOut1 = p1.y < -p1.w;
+    bool bOut2 = p2.y < -p2.w;
+    bool bOut3 = p3.y < -p3.w;
+
+    vector<bool> bList = {bOut1, bOut2, bOut3};
+
+    return bList;
 }
 
 void Canvas::_triangleRasterize(Triangle &tri)
