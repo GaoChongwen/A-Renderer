@@ -243,15 +243,10 @@ void Canvas::_doClppingInCvvAgainstLeftPlane(vector<Triangle> &triList) const
     for (auto iter = triList.begin(); iter != triList.end(); /*do nothing*/)
     {
         Triangle &tri = *iter;
-        // Vec4 p1 = tri.v1.pos;
-        // Vec4 p2 = tri.v2.pos;
-        // Vec4 p3 = tri.v3.pos;
-        // bool bOut1 = p1.x < -p1.w;
-        // bool bOut2 = p2.x < -p2.w;
-        // bool bOut3 = p3.x < -p3.w;
+
         vector<VertexOut> vertice = {tri.v1, tri.v2, tri.v3};
-        // vector<bool> bList = {bOut1, bOut2, bOut3};
         vector<bool> bList = _getbOutListForLeftPlane(tri);
+
         int outNum = 0;
         for (int i = 0; i < bList.size(); ++i)
         {
@@ -331,7 +326,8 @@ void Canvas::_doClppingInCvvAgainstLeftPlane(vector<Triangle> &triList) const
                 // ax + (cx - ax) * factor = newX
                 // aw + (cw - aw) * factor = newW
                 // newX = - newW
-                Ldouble factor = (vertIn.pos.x + vertIn.pos.w) / (vertIn.pos.x - vertOut.pos.x + vertIn.pos.w - vertOut.pos.w);
+                // Ldouble factor = (vertIn.pos.x + vertIn.pos.w) / (vertIn.pos.x - vertOut.pos.x + vertIn.pos.w - vertOut.pos.w);
+                Ldouble factor = _getFactorForLeftPlane(vertIn);
                 VertexOut vertNew = vertIn.interpolateEarly(vertOut, factor);
                 vertNewList.push_back(vertIn);
                 vertNewList.push_back(vertNew);
@@ -357,15 +353,10 @@ void Canvas::_doClppingInCvvAgainstRightPlane(vector<Triangle> &triList) const
     for (auto iter = triList.begin(); iter != triList.end(); /*do nothing*/)
     {
         Triangle &tri = *iter;
-        // Vec4 p1 = tri.v1.pos;
-        // Vec4 p2 = tri.v2.pos;
-        // Vec4 p3 = tri.v3.pos;
-        // bool bOut1 = p1.x > p1.w;
-        // bool bOut2 = p2.x > p2.w;
-        // bool bOut3 = p3.x > p3.w;
+        
         vector<VertexOut> vertice = {tri.v1, tri.v2, tri.v3};
-        // vector<bool> bList = {bOut1, bOut2, bOut3};
         vector<bool> bList = _getbOutListForRightPlane(tri);
+
         int outNum = 0;
         for (int i = 0; i < bList.size(); ++i)
         {
@@ -406,7 +397,8 @@ void Canvas::_doClppingInCvvAgainstRightPlane(vector<Triangle> &triList) const
                 // ax + (cx - ax) * factor = newX
                 // aw + (cw - aw) * factor = newW
                 // newX = newW
-                Ldouble factor = (vertIn.pos.x - vertIn.pos.w) / (vertIn.pos.x - vertOut.pos.x + vertOut.pos.w - vertIn.pos.w);
+                // Ldouble factor = (vertIn.pos.x - vertIn.pos.w) / (vertIn.pos.x - vertOut.pos.x + vertOut.pos.w - vertIn.pos.w);
+                Ldouble factor = _getFactorForRightPlane(vertIn);
                 VertexOut vertNew = vertIn.interpolate(vertOut, factor);
                 vertice[index] = vertNew;
             }
@@ -471,16 +463,10 @@ void Canvas::_doClppingInCvvAgainstTopPlane(vector<Triangle> &triList) const
     for (auto iter = triList.begin(); iter != triList.end(); /*do nothing*/)
     {
         Triangle &tri = *iter;
-        // Vec4 p1 = tri.v1.pos;
-        // Vec4 p2 = tri.v2.pos;
-        // Vec4 p3 = tri.v3.pos;
-        // bool bOut1 = p1.y > p1.w;
-        // bool bOut2 = p2.y > p2.w;
-        // bool bOut3 = p3.y > p3.w;
-        vector<VertexOut> vertice = {tri.v1, tri.v2, tri.v3};
-        // vector<bool> bList = {bOut1, bOut2, bOut3};
 
+        vector<VertexOut> vertice = {tri.v1, tri.v2, tri.v3};
         vector<bool> bList = _getbOutListForTopPlane(tri);
+
         int outNum = 0;
         for (int i = 0; i < bList.size(); ++i)
         {
@@ -560,7 +546,8 @@ void Canvas::_doClppingInCvvAgainstTopPlane(vector<Triangle> &triList) const
                 // ay + (cy - ay) * factor = newY
                 // aw + (cw - aw) * factor = newW
                 // newY = newW
-                Ldouble factor = (vertIn.pos.y - vertIn.pos.w) / (vertIn.pos.y - vertOut.pos.y + vertOut.pos.w - vertIn.pos.w);
+                // Ldouble factor = (vertIn.pos.y - vertIn.pos.w) / (vertIn.pos.y - vertOut.pos.y + vertOut.pos.w - vertIn.pos.w);
+                Ldouble factor = _getFactorForTopPlane(vertIn);
                 VertexOut vertNew = vertIn.interpolateEarly(vertOut, factor);
                 vertNewList.push_back(vertIn);
                 vertNewList.push_back(vertNew);
@@ -586,15 +573,10 @@ void Canvas::_doClppingInCvvAgainstBottomPlane(vector<Triangle> &triList) const
     for (auto iter = triList.begin(); iter != triList.end(); /*do nothing*/)
     {
         Triangle &tri = *iter;
-        // Vec4 p1 = tri.v1.pos;
-        // Vec4 p2 = tri.v2.pos;
-        // Vec4 p3 = tri.v3.pos;
-        // bool bOut1 = p1.y < -p1.w;
-        // bool bOut2 = p2.y < -p2.w;
-        // bool bOut3 = p3.y < -p3.w;
+        
         vector<VertexOut> vertice = {tri.v1, tri.v2, tri.v3};
-        // vector<bool> bList = {bOut1, bOut2, bOut3};
         vector<bool> bList = _getbOutListForBottomPlane(tri);
+
         int outNum = 0;
         for (int i = 0; i < bList.size(); ++i)
         {
@@ -635,7 +617,8 @@ void Canvas::_doClppingInCvvAgainstBottomPlane(vector<Triangle> &triList) const
                 // ay + (cy - ay) * factor = newY
                 // aw + (cw - aw) * factor = newW
                 // newY = - newW
-                Ldouble factor = (vertIn.pos.y + vertIn.pos.w) / (vertIn.pos.y - vertOut.pos.y + vertIn.pos.w - vertOut.pos.w);
+                // Ldouble factor = (vertIn.pos.y + vertIn.pos.w) / (vertIn.pos.y - vertOut.pos.y + vertIn.pos.w - vertOut.pos.w);
+                Ldouble factor = _getFactorForBottomPlane(vertIn);
                 VertexOut vertNew = vertIn.interpolate(vertOut, factor);
                 vertice[index] = vertNew;
             }
@@ -700,15 +683,10 @@ void Canvas::_doClppingInCvvAgainstFarPlane(vector<Triangle> &triList) const
     for (auto iter = triList.begin(); iter != triList.end(); /*do nothing*/)
     {
         Triangle &tri = *iter;
-        // Vec4 p1 = tri.v1.pos;
-        // Vec4 p2 = tri.v2.pos;
-        // Vec4 p3 = tri.v3.pos;
-        // bool bOut1 = p1.z > p1.w;
-        // bool bOut2 = p2.z > p2.w;
-        // bool bOut3 = p3.z > p3.w;
+        
         vector<VertexOut> vertice = {tri.v1, tri.v2, tri.v3};
-        // vector<bool> bList = {bOut1, bOut2, bOut3};
         vector<bool> bList = _getbOutListForFarPlane(tri);
+
         int outNum = 0;
         for (int i = 0; i < bList.size(); ++i)
         {
@@ -788,7 +766,8 @@ void Canvas::_doClppingInCvvAgainstFarPlane(vector<Triangle> &triList) const
                 // az + (cz - az) * factor = newZ
                 // aw + (cw - aw) * factor = newW
                 // newZ = newW
-                Ldouble factor = (vertIn.pos.z - vertIn.pos.w) / (vertIn.pos.z - vertOut.pos.z + vertOut.pos.w - vertIn.pos.w);
+                // Ldouble factor = (vertIn.pos.z - vertIn.pos.w) / (vertIn.pos.z - vertOut.pos.z + vertOut.pos.w - vertIn.pos.w);
+                Ldouble factor = _getFactorForFarPlane(vertIn);
                 VertexOut vertNew = vertIn.interpolateEarly(vertOut, factor);
                 vertNewList.push_back(vertIn);
                 vertNewList.push_back(vertNew);
@@ -815,15 +794,10 @@ void Canvas::_doClppingInCvvAgainstNearPlane(vector<Triangle> &triList) const
     for (auto iter = triList.begin(); iter != triList.end(); /*do nothing*/)
     {
         Triangle &tri = *iter;
-        // Vec4 p1 = tri.v1.pos;
-        // Vec4 p2 = tri.v2.pos;
-        // Vec4 p3 = tri.v3.pos;
-        // bool bOut1 = p1.z < 0;
-        // bool bOut2 = p2.z < 0;
-        // bool bOut3 = p3.z < 0;
+        
         vector<VertexOut> vertice = {tri.v1, tri.v2, tri.v3};
         vector<bool> bList = _getbOutListForNearPlane(tri);
-        // vector<bool> bList = {bOut1, bOut2, bOut3};
+
         int outNum = 0;
         for (int i = 0; i < bList.size(); ++i)
         {
@@ -897,7 +871,8 @@ void Canvas::_doClppingInCvvAgainstNearPlane(vector<Triangle> &triList) const
                 // 生成对应新顶�?
                 int index = indiceIn.at(i);
                 VertexOut vertIn = vertice.at(index);
-                Ldouble factor = (vertIn.pos.z - 0) / (vertIn.pos.z - vertOut.pos.z);
+                Ldouble factor = _getFactorForNearPlane(vertIn);
+                // VertexOut vertNew = (vertIn.pos.z - 0) / (vertIn.pos.z - vertOut.pos.z);
                 VertexOut vertNew = vertIn.interpolateEarly(vertOut, factor);
                 vertNewList.push_back(vertIn);
                 vertNewList.push_back(vertNew);
