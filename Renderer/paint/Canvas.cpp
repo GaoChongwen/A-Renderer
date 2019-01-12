@@ -44,8 +44,8 @@ Canvas::Canvas(int width, int height) : _surface(nullptr),
     auto sky = SkyBox::create();
     _node.push_back(sky);
 
-    auto box = Box::create();
-    _node.push_back(box);
+//    auto box = Box::create();
+//    _node.push_back(box);
 }
 
 Canvas *Canvas::getInstance()
@@ -192,13 +192,12 @@ void Canvas::processTriangle(Triangle &tri)
     vector<Triangle> triangleList = {triangle};
 
     doClippingInCvv(triangleList);
-
-    _drawTriangle(tri);
-    // for (int i = 0; i < triangleList.size(); ++i)
-    // {
-    //     Triangle &tri = triangleList.at(i);
-    //     _drawTriangle(tri);
-    // }
+    
+     for (int i = 0; i < triangleList.size(); ++i)
+     {
+         Triangle &tri = triangleList.at(i);
+         _drawTriangle(tri);
+     }
 }
 
 void Canvas::transformTriToScrn(Triangle &tri) const
@@ -919,7 +918,7 @@ void Canvas::_doClppingInCvvAgainstNearPlane(vector<Triangle> &triList) const
     }
 }
 
-vector<bool> Canvas::_getbOutListForNearPlane(Triangle &tri)
+vector<bool> Canvas::_getbOutListForNearPlane(Triangle &tri) const
 {
     Vec4 p1 = tri.v1.pos;
     Vec4 p2 = tri.v2.pos;
@@ -934,7 +933,7 @@ vector<bool> Canvas::_getbOutListForNearPlane(Triangle &tri)
     return bList;
 }
 
-vector<bool> Canvas::_getbOutListForFarPlane(Triangle &tri)
+vector<bool> Canvas::_getbOutListForFarPlane(Triangle &tri) const
 {
     Vec4 p1 = tri.v1.pos;
     Vec4 p2 = tri.v2.pos;
@@ -949,7 +948,8 @@ vector<bool> Canvas::_getbOutListForFarPlane(Triangle &tri)
     return bList;
 }
 
-vector<bool> Canvas::_getbOutListForRightPlane(Triangle &tri){
+vector<bool> Canvas::_getbOutListForRightPlane(Triangle &tri) const
+{
     Vec4 p1 = tri.v1.pos;
     Vec4 p2 = tri.v2.pos;
     Vec4 p3 = tri.v3.pos;
@@ -963,7 +963,7 @@ vector<bool> Canvas::_getbOutListForRightPlane(Triangle &tri){
     return bList;    
 }
 
-vector<bool> Canvas::_getbOutListForLeftPlane(Triangle &tri)
+vector<bool> Canvas::_getbOutListForLeftPlane(Triangle &tri) const
 {
     Vec4 p1 = tri.v1.pos;
     Vec4 p2 = tri.v2.pos;
@@ -978,7 +978,7 @@ vector<bool> Canvas::_getbOutListForLeftPlane(Triangle &tri)
     return bList;
 }
 
-vector<bool> Canvas::_getbOutListForTopPlane(Triangle &tri)
+vector<bool> Canvas::_getbOutListForTopPlane(Triangle &tri) const
 {
     Vec4 p1 = tri.v1.pos;
     Vec4 p2 = tri.v2.pos;
@@ -993,7 +993,7 @@ vector<bool> Canvas::_getbOutListForTopPlane(Triangle &tri)
     return bList;
 }
 
-vector<bool> Canvas::_getbOutListForBottomPlane(Triangle &tri)
+vector<bool> Canvas::_getbOutListForBottomPlane(Triangle &tri) const
 {
     Vec4 p1 = tri.v1.pos;
     Vec4 p2 = tri.v2.pos;

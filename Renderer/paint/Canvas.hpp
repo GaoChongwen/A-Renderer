@@ -134,17 +134,17 @@ public:
     
     void _doClppingInCvvAgainstBottomPlane(vector<Triangle> &triList) const;
     
-    vector<bool> _getbOutListForNearPlane(Triangle &tri);
+    vector<bool> _getbOutListForNearPlane(Triangle &tri) const;
 
-    vector<bool> _getbOutListForFarPlane(Triangle &tri);
+    vector<bool> _getbOutListForFarPlane(Triangle &tri) const;
     
-    vector<bool> _getbOutListForRightPlane(Triangle &tri);
+    vector<bool> _getbOutListForRightPlane(Triangle &tri) const;
     
-    vector<bool> _getbOutListForLeftPlane(Triangle &tri);
+    vector<bool> _getbOutListForLeftPlane(Triangle &tri) const;
 
-    vector<bool> _getbOutListForTopPlane(Triangle &tri);
+    vector<bool> _getbOutListForTopPlane(Triangle &tri) const;
     
-    vector<bool> _getbOutListForBottomPlane(Triangle &tri);
+    vector<bool> _getbOutListForBottomPlane(Triangle &tri) const;
 
     void putPixel(int px , int py , const Color &color);
     
