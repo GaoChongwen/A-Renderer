@@ -1,16 +1,11 @@
-// ============================================================================
-// [Include Section]
-// ============================================================================
-#include "CApp.h"
+#include "App.h"
 #include <unistd.h>
 #include <cstring>
 #include <sstream>
 #include <cstdlib>
 #include <iostream>
-// ============================================================================
-// [Defines & Constants]
-// ============================================================================
-#define APPTITLE 		"Z-Renderer"
+
+#define APPTITLE 		"Soft-Renderer"
 
 using namespace std;
 
@@ -24,7 +19,7 @@ static long getCurrentMillSecond()
     return lLastTime;
 }
 
-CApp::CApp() :
+App::App() :
     window(nullptr),
     renderer(nullptr),
     _canvas(nullptr),
@@ -33,12 +28,12 @@ CApp::CApp() :
     _time = getCurrentMillSecond();
 }
 
-CApp::~CApp()
+App::~App()
 {
 	OnCleanup();
 }
 
-int CApp::OnInit()
+int App::OnInit()
 {
 	// Initialize the SDL library.
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
@@ -67,7 +62,7 @@ int CApp::OnInit()
 	return APP_OK;
 }
 
-void CApp::OnCleanup()
+void App::OnCleanup()
 {
 	if (renderer != NULL) {
 		SDL_DestroyRenderer(renderer);	
@@ -79,7 +74,7 @@ void CApp::OnCleanup()
 	SDL_Quit();
 }
 
-void CApp::onKeyPress(SDL_Keycode keyCode , double dt) {
+void App::onKeyPress(SDL_Keycode keyCode , double dt) {
     auto camera = Camera::getInstance();
     auto v = 45;
     auto velo = camera->getMoveVelo();
@@ -88,27 +83,21 @@ void CApp::onKeyPress(SDL_Keycode keyCode , double dt) {
             running = false;
             break;
         case SDLK_w:
-            // 前
             camera->offsetPosition(camera->forward() * velo * dt);
             break;
         case SDLK_s:
-            // 后
             camera->offsetPosition(-camera->forward() * velo * dt);
             break;
         case SDLK_a:
-            // 左
             camera->offsetPosition(-camera->right() * velo * dt);
             break;
         case SDLK_d:
-            // 右
             camera->offsetPosition(camera->right() * velo * dt);
             break;
         case SDLK_z:
-            // 上
             camera->offsetPosition(camera->up() * velo * dt);
             break;
         case SDLK_x:
-            // 下
             camera->offsetPosition(-camera->up() * velo * dt);
             break;
         case SDLK_UP:
@@ -128,7 +117,7 @@ void CApp::onKeyPress(SDL_Keycode keyCode , double dt) {
     }
 }
 
-int CApp::OnExecute()
+int App::OnExecute()
 {
 	// Initialize application.
 	int state = OnInit();
@@ -159,7 +148,7 @@ int CApp::OnExecute()
 	return state;
 }
 
-void CApp::OnEvent(SDL_Event* event , double dt)
+void App::OnEvent(SDL_Event* event , double dt)
 {
 	switch (event->type)
 	{
@@ -175,12 +164,12 @@ void CApp::OnEvent(SDL_Event* event , double dt)
 	}
 }
 
-void CApp::OnUpdate(double dt)
+void App::OnUpdate(double dt)
 {
 	// Update your game logic here
 }
 
-void CApp::OnRender(double dt)
+void App::OnRender(double dt)
 {
     SDL_RenderClear(renderer);
 
@@ -190,16 +179,4 @@ void CApp::OnRender(double dt)
 	
     SDL_RenderPresent(renderer);
 }
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -1,6 +1,3 @@
-// ============================================================================
-// [Include Section]
-// ============================================================================
 #ifdef _WIN32
 #include <SDL.h>
 #else
@@ -12,12 +9,7 @@
 #endif
 
 
-
-// ============================================================================
-// [CApp]
-// ============================================================================
-// This is just a sample SDL application class to test that the app works.
-class CApp
+class App
 {
 public:
 
@@ -28,8 +20,8 @@ public:
 		APP_FAILED = 1
 	};
 
-	CApp();
-	~CApp();
+	App();
+	~App();
 	
     void setInterval(double val) {
         _interval = val;
