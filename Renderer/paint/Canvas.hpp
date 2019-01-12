@@ -146,32 +146,32 @@ public:
     
     vector<bool> _getbOutListForBottomPlane(Triangle &tri) const;
 
-    inline Ldouble _getFactorForNearPlane(const VertexOut &vertIn) const
+    inline Ldouble _getFactorForNearPlane(const VertexOut &vertIn, const VertexOut &vertOut) const
     {
         return (vertIn.pos.z - 0) / (vertIn.pos.z - vertOut.pos.z);
     }
 
-    inline Ldouble _getFactorForFarPlane(const VertexOut &vertIn) const
+    inline Ldouble _getFactorForFarPlane(const VertexOut &vertIn, const VertexOut &vertOut) const
     {
         return (vertIn.pos.z - vertIn.pos.w) / (vertIn.pos.z - vertOut.pos.z + vertOut.pos.w - vertIn.pos.w);
     }
 
-    inline Ldouble _getFactorForRightPlane(const VertexOut &vertIn) const
+    inline Ldouble _getFactorForRightPlane(const VertexOut &vertIn, const VertexOut &vertOut) const
     {
         return (vertIn.pos.x - vertIn.pos.w) / (vertIn.pos.x - vertOut.pos.x + vertOut.pos.w - vertIn.pos.w);
     }
 
-    inline Ldouble _getFactorForLeftPlane(const VertexOut &vertIn) const
+    inline Ldouble _getFactorForLeftPlane(const VertexOut &vertIn, const VertexOut &vertOut) const
     {
         return (vertIn.pos.x + vertIn.pos.w) / (vertIn.pos.x - vertOut.pos.x + vertIn.pos.w - vertOut.pos.w);
     }
 
-    inline Ldouble _getFactorForTopPlane(const VertexOut &vertIn) const
+    inline Ldouble _getFactorForTopPlane(const VertexOut &vertIn, const VertexOut &vertOut) const
     {
         return (vertIn.pos.y - vertIn.pos.w) / (vertIn.pos.y - vertOut.pos.y + vertOut.pos.w - vertIn.pos.w);
     }
 
-    inline Ldouble _getFactorForBottomPlane(const VertexOut &vertIn) const
+    inline Ldouble _getFactorForBottomPlane(const VertexOut &vertIn, const VertexOut &vertOut) const
     {
         return (vertIn.pos.y + vertIn.pos.w) / (vertIn.pos.y - vertOut.pos.y + vertIn.pos.w - vertOut.pos.w);
     }
