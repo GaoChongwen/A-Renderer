@@ -7,6 +7,7 @@
 #include "Sprite3D.hpp"
 #include "Ground.hpp"
 #include "SkyBox.hpp"
+#include "ClipUtil.hpp"
 
 using namespace std;
 
@@ -191,8 +192,9 @@ void Canvas::processTriangle(Triangle &tri)
     Triangle triangle = tri;
     vector<Triangle> triangleList = {triangle};
 
-    doClippingInCvv(triangleList);
-    
+    //doClippingInCvv(triangleList);
+    ClipUtil::doClippingInCvv(triangleList);
+
      for (int i = 0; i < triangleList.size(); ++i)
      {
          Triangle &tri = triangleList.at(i);
