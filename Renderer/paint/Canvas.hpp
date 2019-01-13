@@ -97,7 +97,6 @@ public:
     
     void drawElement(const vector<Vertex> &verts , const vector<int> &indice);
     
-    // bool isCulling(const VertexOut &v1 , const VertexOut &v2 , const VertexOut &v3) const;
     bool isCulling(const Triangle &tri) const;
     
     VertexOut _Vertex2VertexOut(const Vertex &vert) const;
@@ -295,7 +294,7 @@ protected:
     SDL_Surface * _surface;
 };
 
-#endif /* Canvas_hpp */
+#endif
 
 
 

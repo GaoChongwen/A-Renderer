@@ -287,7 +287,6 @@ void Canvas::_doClppingInCvvAgainstLeftPlane(vector<Triangle> &triList) const
                 // ax + (cx - ax) * factor = newX
                 // aw + (cw - aw) * factor = newW
                 // newX = - newW
-                // Ldouble factor = (vertIn.pos.x + vertIn.pos.w) / (vertIn.pos.x - vertOut.pos.x + vertIn.pos.w - vertOut.pos.w);
                 Ldouble factor = _getFactorForLeftPlane(vertIn, vertOut);
                 VertexOut vertNew = vertIn.interpolate(vertOut, factor);
                 vertice[index] = vertNew;
@@ -398,7 +397,6 @@ void Canvas::_doClppingInCvvAgainstRightPlane(vector<Triangle> &triList) const
                 // ax + (cx - ax) * factor = newX
                 // aw + (cw - aw) * factor = newW
                 // newX = newW
-                // Ldouble factor = (vertIn.pos.x - vertIn.pos.w) / (vertIn.pos.x - vertOut.pos.x + vertOut.pos.w - vertIn.pos.w);
                 Ldouble factor = _getFactorForRightPlane(vertIn, vertOut);
                 VertexOut vertNew = vertIn.interpolate(vertOut, factor);
                 vertice[index] = vertNew;
@@ -509,7 +507,6 @@ void Canvas::_doClppingInCvvAgainstTopPlane(vector<Triangle> &triList) const
                 // ay + (cy - ay) * factor = newY
                 // aw + (cw - aw) * factor = newW
                 // newY = newW
-                // Ldouble factor = (vertIn.pos.y - vertIn.pos.w) / (vertIn.pos.y - vertOut.pos.y + vertOut.pos.w - vertIn.pos.w);
                 Ldouble factor = _getFactorForTopPlane(vertIn, vertOut);
                 VertexOut vertNew = vertIn.interpolate(vertOut, factor);
                 vertice[index] = vertNew;
@@ -620,7 +617,6 @@ void Canvas::_doClppingInCvvAgainstBottomPlane(vector<Triangle> &triList) const
                 // ay + (cy - ay) * factor = newY
                 // aw + (cw - aw) * factor = newW
                 // newY = - newW
-                // Ldouble factor = (vertIn.pos.y + vertIn.pos.w) / (vertIn.pos.y - vertOut.pos.y + vertIn.pos.w - vertOut.pos.w);
                 Ldouble factor = _getFactorForBottomPlane(vertIn, vertOut);
                 VertexOut vertNew = vertIn.interpolate(vertOut, factor);
                 vertice[index] = vertNew;
@@ -729,10 +725,7 @@ void Canvas::_doClppingInCvvAgainstFarPlane(vector<Triangle> &triList) const
             {
                 int index = indiceOut.at(i);
                 VertexOut &vertOut = vertice.at(index);
-                // az + (cz - az) * factor = newZ
-                // aw + (cw - aw) * factor = newW
-                // newZ = newW
-                // Ldouble factor = (vertIn.pos.z - vertIn.pos.w) / (vertIn.pos.z - vertOut.pos.z + vertOut.pos.w - vertIn.pos.w);
+
                 Ldouble factor = _getFactorForFarPlane(vertIn, vertOut);
 
                 VertexOut vertNew = vertIn.interpolate(vertOut, factor);
@@ -770,10 +763,7 @@ void Canvas::_doClppingInCvvAgainstFarPlane(vector<Triangle> &triList) const
                 // 生成对应新顶�?
                 int index = indiceIn.at(i);
                 VertexOut vertIn = vertice.at(index);
-                // az + (cz - az) * factor = newZ
-                // aw + (cw - aw) * factor = newW
-                // newZ = newW
-                // Ldouble factor = (vertIn.pos.z - vertIn.pos.w) / (vertIn.pos.z - vertOut.pos.z + vertOut.pos.w - vertIn.pos.w);
+
                 Ldouble factor = _getFactorForFarPlane(vertIn, vertOut);
                 VertexOut vertNew = vertIn.interpolateEarly(vertOut, factor);
                 vertNewList.push_back(vertIn);
@@ -842,7 +832,6 @@ void Canvas::_doClppingInCvvAgainstNearPlane(vector<Triangle> &triList) const
             {
                 int index = indiceOut.at(i);
                 VertexOut &vertOut = vertice.at(index);
-                // Ldouble factor = (vertIn.pos.z - 0) / (vertIn.pos.z - vertOut.pos.z);
                 Ldouble factor = _getFactorForNearPlane(vertIn, vertOut);
 
                 VertexOut vertNew = vertIn.interpolate(vertOut, factor);
@@ -881,7 +870,6 @@ void Canvas::_doClppingInCvvAgainstNearPlane(vector<Triangle> &triList) const
                 int index = indiceIn.at(i);
                 VertexOut vertIn = vertice.at(index);
                 Ldouble factor = _getFactorForNearPlane(vertIn, vertOut);
-                // VertexOut vertNew = (vertIn.pos.z - 0) / (vertIn.pos.z - vertOut.pos.z);
                 VertexOut vertNew = vertIn.interpolateEarly(vertOut, factor);
                 vertNewList.push_back(vertIn);
                 vertNewList.push_back(vertNew);
