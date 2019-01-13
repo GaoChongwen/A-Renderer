@@ -116,61 +116,6 @@ public:
     
     void _triangleBottomRasterize(const VertexOut &v1 , const VertexOut &v2 , const VertexOut &v3);
     
-    // void doClippingInCvv(vector<Triangle> &triList) const;
-    
-    // void _doClppingInCvvAgainstNearPlane(vector<Triangle> &triList) const;
-    
-    // void _doClppingInCvvAgainstFarPlane(vector<Triangle> &triList) const;
-    
-    // void _doClppingInCvvAgainstRightPlane(vector<Triangle> &triList) const;
-    
-    // void _doClppingInCvvAgainstLeftPlane(vector<Triangle> &triList) const;
-    
-    // void _doClppingInCvvAgainstTopPlane(vector<Triangle> &triList) const;
-    
-    // void _doClppingInCvvAgainstBottomPlane(vector<Triangle> &triList) const;
-    
-    // vector<bool> _getbOutListForNearPlane(Triangle &tri) const;
-
-    // vector<bool> _getbOutListForFarPlane(Triangle &tri) const;
-    
-    // vector<bool> _getbOutListForRightPlane(Triangle &tri) const;
-    
-    // vector<bool> _getbOutListForLeftPlane(Triangle &tri) const;
-
-    // vector<bool> _getbOutListForTopPlane(Triangle &tri) const;
-    
-    // vector<bool> _getbOutListForBottomPlane(Triangle &tri) const;
-
-    // inline Ldouble _getFactorForNearPlane(const VertexOut &vertIn, const VertexOut &vertOut) const
-    // {
-    //     return (vertIn.pos.z - 0) / (vertIn.pos.z - vertOut.pos.z);
-    // }
-
-    // inline Ldouble _getFactorForFarPlane(const VertexOut &vertIn, const VertexOut &vertOut) const
-    // {
-    //     return (vertIn.pos.z - vertIn.pos.w) / (vertIn.pos.z - vertOut.pos.z + vertOut.pos.w - vertIn.pos.w);
-    // }
-
-    // inline Ldouble _getFactorForRightPlane(const VertexOut &vertIn, const VertexOut &vertOut) const
-    // {
-    //     return (vertIn.pos.x - vertIn.pos.w) / (vertIn.pos.x - vertOut.pos.x + vertOut.pos.w - vertIn.pos.w);
-    // }
-
-    // inline Ldouble _getFactorForLeftPlane(const VertexOut &vertIn, const VertexOut &vertOut) const
-    // {
-    //     return (vertIn.pos.x + vertIn.pos.w) / (vertIn.pos.x - vertOut.pos.x + vertIn.pos.w - vertOut.pos.w);
-    // }
-
-    // inline Ldouble _getFactorForTopPlane(const VertexOut &vertIn, const VertexOut &vertOut) const
-    // {
-    //     return (vertIn.pos.y - vertIn.pos.w) / (vertIn.pos.y - vertOut.pos.y + vertOut.pos.w - vertIn.pos.w);
-    // }
-
-    // inline Ldouble _getFactorForBottomPlane(const VertexOut &vertIn, const VertexOut &vertOut) const
-    // {
-    //     return (vertIn.pos.y + vertIn.pos.w) / (vertIn.pos.y - vertOut.pos.y + vertIn.pos.w - vertOut.pos.w);
-    // }
 
     void putPixel(int px , int py , const Color &color);
     
