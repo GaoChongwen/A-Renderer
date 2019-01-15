@@ -6,6 +6,7 @@ auto ret = new type(); \
 ret->init(); \
 return ret; \
 }
+enum LightType {SpotLight, DirectionalLight};
 
 #define Setter_and_getter_vec3(varName , funcName) \
 public : inline void set##funcName(const Vec3 &val) { \

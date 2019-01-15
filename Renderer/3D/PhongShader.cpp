@@ -26,8 +26,13 @@ Color PhongShader::getAmbient(const VertexOut &frag) const {
 Color PhongShader::getDiffuse(const VertexOut &frag) const {
     Vec3 fragPos = frag.posWorld;
     Vec3 normal = frag.normal.getNormalize();
-    
-    Vec3 ray = (_light.pos - fragPos).getNormalize();
+    // 平行光
+    Vec3 ray = _light.direction; 
+    // 点光源
+    if (_light.type == SpotLight){
+        ray = (_light.pos - fragPos).getNormalize();
+    }
+    // Vec3 ray = (_light.pos - fragPos).getNormalize();
     double cosTheta = ray.dot(normal);
     double diff = max(cosTheta , (double)0.0f);
     Color diffuse = _light.color* _light.factor * diff * _material.diffuseFactor;
@@ -37,7 +42,13 @@ Color PhongShader::getDiffuse(const VertexOut &frag) const {
 Color PhongShader::getSpecular(const VertexOut &frag) const {
     Vec3 fragPos = frag.posWorld;
     Vec3 normal = frag.normal.getNormalize();
-    Vec3 ray = (_light.pos - fragPos).getNormalize();
+    // 平行光
+    Vec3 ray = _light.direction; 
+    // 点光源
+    if (_light.type == SpotLight){
+        ray = (_light.pos - fragPos).getNormalize();
+    }
+    // Vec3 ray = (_light.pos - fragPos).getNormalize();
     Vec3 cameraPos = Camera::getInstance()->getPosition();
     Vec3 viewDir = (cameraPos - fragPos).getNormalize();
     
@@ -65,6 +76,15 @@ Color PhongShader::fs(const VertexOut &frag) const {
     Color diffuse = getDiffuse(frag);
     
     Color specular = getSpecular(frag);
+
+    if (_light.type == SpotLight){
+        Ldouble length =(_light.pos - fragPos).getLength();
+        Ldouble att = 1.f / _light.att.dot(Vec3(1.f, length, length*length));
+        diffuse = diffuse*att;
+        specular = specular*att;
+    }
+
+    Color phongColor = fragColor * (ambient + specular)+diffuse;
 
     return fragColor * (ambient + specular + diffuse);
 }

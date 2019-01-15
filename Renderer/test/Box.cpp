@@ -104,9 +104,13 @@ void Box::init() {
     ambient.factor = 0.15;
 
     Light light;
+    light.type = SpotLight;
     light.pos = Vec3(0 , 0 , 9);
     light.color = Color(1 , 1 , 1 , 1);
     light.factor = 1.7;
+    light.range = 1.0;
+    light.direction = Vec3(0,0,0);
+    light.att = Vec3(0.1,0.1,0.1);
 
     Material material;
     material.diffuseFactor = 0.2;
