@@ -78,10 +78,11 @@ Color PhongShader::fs(const VertexOut &frag) const {
     Color specular = getSpecular(frag);
 
     if (_light.type == SpotLight){
+        Vec3 fragPos = frag.posWorld;
         Ldouble length =(_light.pos - fragPos).getLength();
         Ldouble att = 1.f / _light.att.dot(Vec3(1.f, length, length*length));
-        diffuse = diffuse*att;
-        specular = specular*att;
+//        diffuse = diffuse*att;
+//        specular = specular*att;
     }
 
     Color phongColor = fragColor * (ambient + specular)+diffuse;

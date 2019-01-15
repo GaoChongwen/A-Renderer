@@ -42,11 +42,11 @@ Canvas::Canvas(int width, int height) : _surface(nullptr),
     //    auto ground = Ground::create();
     //    _node.push_back(ground);
     //
-    auto sky = SkyBox::create();
-    _node.push_back(sky);
+//    auto sky = SkyBox::create();
+//    _node.push_back(sky);
 
-//    auto box = Box::create();
-//    _node.push_back(box);
+    auto box = Box::create();
+    _node.push_back(box);
 }
 
 Canvas *Canvas::getInstance()
