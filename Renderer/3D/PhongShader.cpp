@@ -119,8 +119,8 @@ Color PhongShader::fs(const VertexOut &frag) const {
 
     if (_light.type == SpotLight){
         Vec3 fragPos = frag.posWorld;
-        Ldouble length =(_light.pos - fragPos).getLength();
-        Ldouble att = 1.f / _light.att.dot(Vec3(1.f, length, length*length));
+        double length =(_light.pos - fragPos).getLength();
+        double att = 1.f / _light.att.dot(Vec3(1.f, length, length*length));
 //        diffuse = diffuse*att;
 //        specular = specular*att;
     }

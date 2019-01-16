@@ -48,7 +48,7 @@ public:
     
     void scanLineFill(VertexOut &v1 ,VertexOut &v2 , int yIndex);
     
-    void drawPixel(int px , int py , Ldouble z , const Color &color) {
+    void drawPixel(int px , int py , double z , const Color &color) {
         if (!isPassClip(px , py)) {
             return;
         }
@@ -101,7 +101,7 @@ public:
 
     void putPixel(int px , int py , const Color &color);
     
-    inline bool isPassDepth(int px , int py , Ldouble z) {
+    inline bool isPassDepth(int px , int py , double z) {
         if (px < 0 || px >= _width || py < 0 || py >= _height) {
             return false;
         }
@@ -161,12 +161,12 @@ protected:
     
     Canvas(int width = 800 , int height = 600);
     
-    inline void _setDepth(int px , int py , Ldouble z) {
+    inline void _setDepth(int px , int py , double z) {
         int index = getIndex(px, py);
         _depthBuffer[index] = z;
     }
     
-    inline Ldouble _getDepth(int px , int py) {
+    inline double _getDepth(int px , int py) {
         return _depthBuffer[getIndex(px , py)];
     }
     
@@ -174,16 +174,16 @@ protected:
         return (int)((_width) * py + px);
     }
     
-    inline int _getPX(Ldouble x) const {
-        Ldouble startX = -1;
-        Ldouble hw = _width / 2;
+    inline int _getPX(double x) const {
+        double startX = -1;
+        double hw = _width / 2;
         int px = MathUtil::round((x - startX) * hw);
         return px;
     }
     
-    inline int _getPY(Ldouble y) const {
-        Ldouble startY = 1;
-        Ldouble hh = -(_height / 2);
+    inline int _getPY(double y) const {
+        double startY = 1;
+        double hh = -(_height / 2);
         int py = MathUtil::round((y - startY) * hh);
         return py;
     }
@@ -217,7 +217,7 @@ protected:
     /**
      * 深度缓冲，储存Z坐标的倒数，用于深度测�?
      */
-    Ldouble * _depthBuffer;
+    double * _depthBuffer;
     
     SDL_Surface * _surface;
 };

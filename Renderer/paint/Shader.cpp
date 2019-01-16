@@ -38,36 +38,36 @@ void Shader::setTBN(Triangle &triangle){
     const VertexOut &vOut1 = triangle.v1;
     const VertexOut &vOut2 = triangle.v2;
     const VertexOut &vOut3 = triangle.v3;
-    Ldouble p[4][4];
+    double p[4][4];
     for (int i=0; i<4; i++) {
         for (int j = 0; j<4; j++) {
             p[i][j]=0;
         }
     }
     
-    Ldouble E0x = vOut2.pos.x - vOut1.pos.x;
-    Ldouble E0y = vOut2.pos.y - vOut1.pos.y;
-    Ldouble E0z = vOut2.pos.z - vOut1.pos.z;
+    double E0x = vOut2.pos.x - vOut1.pos.x;
+    double E0y = vOut2.pos.y - vOut1.pos.y;
+    double E0z = vOut2.pos.z - vOut1.pos.z;
     
-    Ldouble E1x = vOut3.pos.x - vOut1.pos.x;
-    Ldouble E1y = vOut3.pos.y - vOut1.pos.y;
-    Ldouble E1z = vOut3.pos.z - vOut1.pos.z;
+    double E1x = vOut3.pos.x - vOut1.pos.x;
+    double E1y = vOut3.pos.y - vOut1.pos.y;
+    double E1z = vOut3.pos.z - vOut1.pos.z;
     
-    Ldouble t1 = vOut2.tex.u - vOut1.tex.u;
-    Ldouble b1 = vOut2.tex.v - vOut1.tex.v;
+    double t1 = vOut2.tex.u - vOut1.tex.u;
+    double b1 = vOut2.tex.v - vOut1.tex.v;
     
-    Ldouble t2 = vOut3.tex.u - vOut1.tex.u;
-    Ldouble b2 = vOut3.tex.v - vOut1.tex.v;
+    double t2 = vOut3.tex.u - vOut1.tex.u;
+    double b2 = vOut3.tex.v - vOut1.tex.v;
     
-    Ldouble alpha = 1/(t1*b2 - b1*t2);
+    double alpha = 1/(t1*b2 - b1*t2);
     
-    Ldouble Tx = alpha*(b2*E0x - b1*E1x);
-    Ldouble Ty = alpha*(b2*E0y - b1*E1y);
-    Ldouble Tz = alpha*(b2*E0z - b1*E1z);
+    double Tx = alpha*(b2*E0x - b1*E1x);
+    double Ty = alpha*(b2*E0y - b1*E1y);
+    double Tz = alpha*(b2*E0z - b1*E1z);
     
-    Ldouble Bx = alpha*(-t2*E0x + t1*E1x);
-    Ldouble By = alpha*(-t2*E0y + t1*E1y);
-    Ldouble Bz = alpha*(-t2*E0z + t1*E1z);
+    double Bx = alpha*(-t2*E0x + t1*E1x);
+    double By = alpha*(-t2*E0y + t1*E1y);
+    double Bz = alpha*(-t2*E0z + t1*E1z);
     
     Vec4 line1(E0x, E0y, E0z, 0);
     Vec4 line2(E1x, E1y, E1z, 0);

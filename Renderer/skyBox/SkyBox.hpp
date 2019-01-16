@@ -16,7 +16,7 @@ public:
     
     void init();
     
-    virtual void draw(Ldouble dt);
+    virtual void draw(double dt);
     
 protected:
     

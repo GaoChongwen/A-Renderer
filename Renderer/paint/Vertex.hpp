@@ -15,7 +15,7 @@ public:
     
     Vertex(Vec3 pos = Vec3() , Color color = Color(), Vec3 normal = Vec3() , Vec2 tex = Vec2());
     
-    Vertex interpolate(const Vertex &vertex , Ldouble factor) const;
+    Vertex interpolate(const Vertex &vertex , double factor) const;
     
     void transform(const Mat4 &mat4);
 };
@@ -23,11 +23,11 @@ public:
 class VertexOut {
     
 public:
-    VertexOut interpolate(const VertexOut &target , Ldouble factor) const;
+    VertexOut interpolate(const VertexOut &target , double factor) const;
     
-    VertexOut interpolateEarly(const VertexOut &target , Ldouble factor) const;
+    VertexOut interpolateEarly(const VertexOut &target , double factor) const;
     
-    Ldouble interpolateZ(const VertexOut &target , Ldouble factor) const;
+    double interpolateZ(const VertexOut &target , double factor) const;
 
     Color color;
     Vec3 color_normal;
@@ -43,7 +43,7 @@ public:
     
     Vec2 tex;
     
-    inline Ldouble getZ() const {
+    inline double getZ() const {
         return 1 / oneDivZ;
     }
     
@@ -56,7 +56,7 @@ public:
     }
     
 protected:
-    Ldouble oneDivZ = 0;
+    double oneDivZ = 0;
 };
 
 #endif /* Vertex_hpp */

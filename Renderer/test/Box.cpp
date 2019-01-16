@@ -125,7 +125,7 @@ void Box::init() {
     static_cast<PhongShader *>(_shader)->setAmbient(ambient);
 }
 
-void Box::draw(Ldouble dt) {
+void Box::draw(double dt) {
     begin(dt);
     Canvas::getInstance()->setTexture(_texture);
     Canvas::getInstance()->setTextureNormal(_texture_normal);
