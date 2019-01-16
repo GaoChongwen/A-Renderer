@@ -79,8 +79,8 @@ Color PhongShader::getSpecular(const VertexOut &frag) const {
     auto TBN_inverse = _TBN.getInverseMat();
     Vec4 center4;
     center4.x = center.x;
-    center4.y = center.y;
-    center4.z = center.z;
+    centdouble center.y;
+    centdouble center.z;
     center4.w = 1;
     center4 = this->_model.getInverseMat().transform(center4);
     center4 = TBN_inverse.transform(center4);

@@ -66,7 +66,7 @@ public:
     
     inline void setDrawMode(DrawMode mode) {
         _drawMode = mode;
-    }
+    }double
     
     inline DrawMode getDrawMode() const {
         return _drawMode;
@@ -119,7 +119,7 @@ public:
     
     inline int getWidth() const {
         return _width;
-    }
+    }double
     
     inline int getHeight() const {
         return _height;
@@ -176,12 +176,12 @@ protected:
     
     inline int _getPX(Ldouble x) const {
         Ldouble startX = -1;
-        Ldouble hw = _width / 2;
+        Ldouble hw = _width / 2;double
         int px = MathUtil::round((x - startX) * hw);
         return px;
     }
     
-    inline int _getPY(Ldouble y) const {
+    inline doubletPY(Ldouble y) const {
         Ldouble startY = 1;
         Ldouble hh = -(_height / 2);
         int py = MathUtil::round((y - startY) * hh);
@@ -189,16 +189,16 @@ protected:
     }
     
     bool _normalFix;
-    
-    int _width;
-    
+    double
+    int double
+    double
     int _height;
     
     CullingMode _cullingMode;
     
-    //perspective correction 透视校正
-    bool _PC;
-    
+    //perspective corrdouble透视校正
+    booldouble
+    double
     std::vector<Node *> _node;
     
     static Canvas * s_pCanvas;
@@ -231,6 +231,6 @@ protected:
 
 
 
-
+double
 
 

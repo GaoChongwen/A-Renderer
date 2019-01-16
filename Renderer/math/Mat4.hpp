@@ -8,14 +8,14 @@ class Mat4 {
     
 public:
     union {
-        Ldouble m[4][4];
-        Ldouble a[16];
+        double m[4][4];
+        double a[16];
         struct
         {
-            Ldouble _11; Ldouble _12; Ldouble _13; Ldouble _14;
-            Ldouble _21; Ldouble _22; Ldouble _23; Ldouble _24;
-            Ldouble _31; Ldouble _32; Ldouble _33; Ldouble _34;
-            Ldouble _41; Ldouble _42; Ldouble _43; Ldouble _44;
+            double _11; double _12; double _13; double _14;
+            double _21; double _22; double _23; double _24;
+            double _31; double _32; double _33; double _34;
+            double _41; double _42; double _43; double _44;
         };
     };
     
@@ -25,7 +25,7 @@ public:
         }
     }
     
-    Mat4(Ldouble p[4][4]) {
+    Mat4(double p[4][4]) {
         for (int i = 0 ; i < 4; ++ i) {
             for (int j = 0 ; j < 4; ++ j) {
                 m[i][j] = p[i][j];
@@ -33,7 +33,7 @@ public:
         }
     }
     
-    Mat4(Ldouble * value) {
+    Mat4(double * value) {
         for (int i = 0 ;i< 16 ; ++ i) {
             a[i] = value[i];
         }
@@ -52,11 +52,11 @@ public:
     
     Mat4 getAdjointMat() const;
     
-    Ldouble getAdjointElement(Ldouble a1, Ldouble a2, Ldouble a3,
-                              Ldouble b1, Ldouble b2, Ldouble b3,
-                              Ldouble c1, Ldouble c2, Ldouble c3)const;
+    double getAdjointElement(double a1, double a2, double a3,
+                              double b1, double b2, double b3,
+                              double c1, double c2, double c3)const;
     
-    Ldouble getDet() const;
+    double getDet() const;
     
     inline void print() const {
         cout << this << endl;
@@ -73,23 +73,23 @@ public:
     
     Vec4 transform(const Vec4 &vec) const;
     
-    static Mat4 perspective(Ldouble fov , Ldouble aspect , Ldouble zNear , Ldouble zFar);
+    static Mat4 perspective(double fov , double aspect , double zNear , double zFar);
 
-    static Mat4 scale(Ldouble scale);
+    static Mat4 scale(double scale);
     
-    static Mat4 scale(Ldouble x , Ldouble y , Ldouble z);
+    static Mat4 scale(double x , double y , double z);
     
     static Mat4 scale(const Vec3 &scale);
     
     static Mat4 translate(const Vec3 &vec);
     
-    static Mat4 translate(Ldouble x , Ldouble y , Ldouble z);
+    static Mat4 translate(double x , double y , double z);
     
-    static Mat4 rotateX(Ldouble radian);
+    static Mat4 rotateX(double radian);
     
-    static Mat4 rotateY(Ldouble radian);
+    static Mat4 rotateY(double radian);
     
-    static Mat4 rotateZ(Ldouble radian);
+    static Mat4 rotateZ(double radian);
     
     bool operator == (const Mat4 &other) const;
     
@@ -99,9 +99,9 @@ public:
     
     Mat4 operator - (const Mat4 &other) const;
     
-    Mat4 operator * (Ldouble num) const;
+    Mat4 operator * (double num) const;
     
-    Mat4 operator / (Ldouble num) const;
+    Mat4 operator / (double num) const;
     
     static Mat4 identity();
     

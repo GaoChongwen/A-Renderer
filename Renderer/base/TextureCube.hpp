@@ -19,7 +19,7 @@ public:
     
     Color sample(Vec3 pos) const;
     
-    Color sample(Ldouble x , Ldouble y , Ldouble z) const;
+    Color sample(double x , double y , double z) const;
     
 protected:
     

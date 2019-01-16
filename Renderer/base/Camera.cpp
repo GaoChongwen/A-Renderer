@@ -35,8 +35,8 @@ Mat4 Camera::getViewMat() const {
 }
 
 Mat4 Camera::getProjectionMat() const {
-    Ldouble width = Canvas::getInstance()->getWidth();
-    Ldouble height = Canvas::getInstance()->getHeight();
+    double width = Canvas::getInstance()->getWidth();
+    double height = Canvas::getInstance()->getHeight();
     Mat4 ret = Mat4::perspective(MathUtil::angle2radian(_fovy), width / height, _nearPlane , _farPlane);
     return ret;
 }

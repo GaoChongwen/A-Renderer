@@ -12,23 +12,22 @@ Box::~Box() {
     
 }
 
-//控制box的旋转变�?
 void Box::updateTransform(double dt) {
-    // 旋转速度
+    
     double velo = 45;
-    // 角度变化
+
     _rotate.y += velo * dt;
     if (_rotate.y > 360) {
         _rotate.y -= 360;
     }
-    // 矩阵旋转（角度转弧度�?
+
     Mat4 r = Mat4::rotateY(MathUtil::angle2radian(_rotate.y));
-    // 模型空间到世界空间的变换矩阵
+
     Mat4 model = r * Mat4::scale(_scale) * Mat4::translate(_position);
     auto camera = Camera::getInstance();
-    // 世界空间到相机空间的变换矩阵
+    
     auto v = camera->getViewMat();
-    // 投影矩阵
+    
     auto p = camera->getProjectionMat();
     _shader->setMvp(model , v, p);
 }
@@ -92,7 +91,6 @@ void Box::init() {
     
     decltype(_vertice) temp;
     
-    // 构造顶点集合，3i, 3i+1, 3i+2对应同一个三角形的三个顶�?
     for (int i = 0 ; i < size ; i = i + 8) {
         Vertex v = Vertex(Vec3(a[i] , a[i + 1] , a[i + 2]),
                           Color(1 , 1 , 1 , 0),
@@ -123,7 +121,7 @@ void Box::init() {
     static_cast<PhongShader *>(_shader)->setMaterial(material);
     static_cast<PhongShader *>(_shader)->setLight(light);
     static_cast<PhongShader *>(_shader)->setAmbient(ambient);
-}
+}double
 
 void Box::draw(Ldouble dt) {
     begin(dt);

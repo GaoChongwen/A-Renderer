@@ -2,15 +2,15 @@
 
 
 Vec4 Mat4::transform(const Vec4 &vec) const {
-    Ldouble x = vec.x * _11 + vec.y * _21 + vec.z * _31 + vec.w * _41;
-    Ldouble y = vec.x * _12 + vec.y * _22 + vec.z * _32 + vec.w * _42;
-    Ldouble z = vec.x * _13 + vec.y * _23 + vec.z * _33 + vec.w * _43;
-    Ldouble w = vec.x * _14 + vec.y * _24 + vec.z * _34 + vec.w * _44;
+    double x = vec.x * _11 + vec.y * _21 + vec.z * _31 + vec.w * _41;
+    double y = vec.x * _12 + vec.y * _22 + vec.z * _32 + vec.w * _42;
+    double z = vec.x * _13 + vec.y * _23 + vec.z * _33 + vec.w * _43;
+    double w = vec.x * _14 + vec.y * _24 + vec.z * _34 + vec.w * _44;
     return Vec4(x , y , z , w);
 }
 
-Ldouble Mat4::getDet() const {
-    Ldouble result =
+double Mat4::getDet() const {
+    double result =
     _11 * _22 * _33 * _44   - _11 * _22 * _34 * _43   -
     _11 * _23 * _32 * _44   + _11 * _23 * _34 * _42   +
     
@@ -32,31 +32,31 @@ Ldouble Mat4::getDet() const {
     return result;
 }
 
-Ldouble Mat4::getAdjointElement(Ldouble a1, Ldouble a2, Ldouble a3,
-                               Ldouble b1, Ldouble b2, Ldouble b3,
-                               Ldouble c1, Ldouble c2, Ldouble c3) const {
+double Mat4::getAdjointElement(double a1, double a2, double a3,
+                               double b1, double b2, double b3,
+                               double c1, double c2, double c3) const {
     return a1*(b2*c3 - c2*b3) - a2*(b1*c3 - c1*b3) + a3*(b1*c2 - c1*b2);
 }
 
 Mat4 Mat4::getAdjointMat() const {
-    Ldouble a1 = getAdjointElement(_22, _23, _24, _32, _33, _34, _42, _43, _44);
-    Ldouble a2 = getAdjointElement(_21, _23, _24, _31, _33, _34, _41, _43, _44);
-    Ldouble a3 = getAdjointElement(_21, _22, _24, _31, _32, _34, _41, _42, _44);
-    Ldouble a4 = getAdjointElement(_21, _22, _23, _31, _32, _33, _41, _42, _43);
-    Ldouble b1 = getAdjointElement(_12, _13, _14, _32, _33, _34, _42, _43, _44);
-    Ldouble b2 = getAdjointElement(_11, _13, _14, _31, _33, _34, _41, _43, _44);
-    Ldouble b3 = getAdjointElement(_11, _12, _14, _31, _32, _34, _41, _42, _44);
-    Ldouble b4 = getAdjointElement(_11, _12, _13, _31, _32, _33, _41, _42, _43);
-    Ldouble c1 = getAdjointElement(_12, _13, _14, _22, _23, _24, _42, _43, _44);
-    Ldouble c2 = getAdjointElement(_11, _13, _14, _21, _23, _24, _41, _43, _44);
-    Ldouble c3 = getAdjointElement(_11, _12, _14, _21, _22, _24, _41, _42, _44);
-    Ldouble c4 = getAdjointElement(_11, _12, _13, _21, _22, _23, _41, _42, _43);
-    Ldouble d1 = getAdjointElement(_12, _13, _14, _22, _23, _24, _32, _33, _34);
-    Ldouble d2 = getAdjointElement(_11, _13, _14, _21, _23, _24, _31, _33, _34);
-    Ldouble d3 = getAdjointElement(_11, _12, _14, _21, _22, _24, _31, _32, _34);
-    Ldouble d4 = getAdjointElement(_11, _12, _13, _21, _22, _23, _31, _32, _33);
+    double a1 = getAdjointElement(_22, _23, _24, _32, _33, _34, _42, _43, _44);
+    double a2 = getAdjointElement(_21, _23, _24, _31, _33, _34, _41, _43, _44);
+    double a3 = getAdjointElement(_21, _22, _24, _31, _32, _34, _41, _42, _44);
+    double a4 = getAdjointElement(_21, _22, _23, _31, _32, _33, _41, _42, _43);
+    double b1 = getAdjointElement(_12, _13, _14, _32, _33, _34, _42, _43, _44);
+    double b2 = getAdjointElement(_11, _13, _14, _31, _33, _34, _41, _43, _44);
+    double b3 = getAdjointElement(_11, _12, _14, _31, _32, _34, _41, _42, _44);
+    double b4 = getAdjointElement(_11, _12, _13, _31, _32, _33, _41, _42, _43);
+    double c1 = getAdjointElement(_12, _13, _14, _22, _23, _24, _42, _43, _44);
+    double c2 = getAdjointElement(_11, _13, _14, _21, _23, _24, _41, _43, _44);
+    double c3 = getAdjointElement(_11, _12, _14, _21, _22, _24, _41, _42, _44);
+    double c4 = getAdjointElement(_11, _12, _13, _21, _22, _23, _41, _42, _43);
+    double d1 = getAdjointElement(_12, _13, _14, _22, _23, _24, _32, _33, _34);
+    double d2 = getAdjointElement(_11, _13, _14, _21, _23, _24, _31, _33, _34);
+    double d3 = getAdjointElement(_11, _12, _14, _21, _22, _24, _31, _32, _34);
+    double d4 = getAdjointElement(_11, _12, _13, _21, _22, _23, _31, _32, _33);
     
-    Ldouble arr[16] = {
+    double arr[16] = {
         a1, -a2, a3, -a4,
         -b1, b2, -b3, b4,
         c1, -c2, c3, -c4,
@@ -68,12 +68,12 @@ Mat4 Mat4::getAdjointMat() const {
 // 伴随矩阵除以行列�?
 Mat4 Mat4::getInverseMat() const {
     Mat4 adj = getAdjointMat();
-    Ldouble det = getDet();
+    double det = getDet();
     return adj / (det);
 }
 
 Mat4 Mat4::getTransposeMat() const {
-    Ldouble a[16] = {
+    double a[16] = {
         _11, _21, _31, _41,
         _12, _22, _32, _42,
         _13, _23, _33, _43,
@@ -83,7 +83,7 @@ Mat4 Mat4::getTransposeMat() const {
 }
 
 Mat4 Mat4::identity() {
-    Ldouble ret[16] = {
+    double ret[16] = {
         1 , 0 , 0 , 0,
         0 , 1 , 0 , 0,
         0 , 0 , 1 , 0,
@@ -92,10 +92,10 @@ Mat4 Mat4::identity() {
     return Mat4(ret);
 }
 
-Mat4 Mat4::rotateX(Ldouble radian) {
-    Ldouble s = sinf(radian);
-    Ldouble c = cosf(radian);
-    Ldouble values[16] = {
+Mat4 Mat4::rotateX(double radian) {
+    double s = sinf(radian);
+    double c = cosf(radian);
+    double values[16] = {
         1, 0,  0, 0,
         0, c,  s, 0,
         0, -s, c, 0,
@@ -104,10 +104,10 @@ Mat4 Mat4::rotateX(Ldouble radian) {
     return Mat4(values);
 }
 
-Mat4 Mat4::rotateY(Ldouble radian) {
-    Ldouble s = sinf(radian);
-    Ldouble c = cosf(radian);
-    Ldouble values[16] = {
+Mat4 Mat4::rotateY(double radian) {
+    double s = sinf(radian);
+    double c = cosf(radian);
+    double values[16] = {
         c, 0, -s, 0,
         0, 1, 0,  0,
         s, 0, c,  0,
@@ -116,10 +116,10 @@ Mat4 Mat4::rotateY(Ldouble radian) {
     return Mat4(values);
 }
 
-Mat4 Mat4::rotateZ(Ldouble radian) {
-    Ldouble s = sinf(radian);
-    Ldouble c = cosf(radian);
-    Ldouble values[16] = {
+Mat4 Mat4::rotateZ(double radian) {
+    double s = sinf(radian);
+    double c = cosf(radian);
+    double values[16] = {
         c,  s, 0, 0,
         -s, c, 0, 0,
         0,  0, 1, 0,
@@ -128,16 +128,16 @@ Mat4 Mat4::rotateZ(Ldouble radian) {
     return Mat4(values);
 }
 
-Mat4 Mat4::perspective(Ldouble fovy, Ldouble aspect, Ldouble zNear, Ldouble zFar) {
-    auto tanHalfFovy = tan(fovy / static_cast<Ldouble>(2));
-//    Ldouble value[16] = {
-//        static_cast<Ldouble>(1) / (aspect * tanHalfFovy) , 0 , 0 , 0,
-//        0 , static_cast<Ldouble>(1) / (tanHalfFovy) , 0 , 0,
+Mat4 Mat4::perspective(double fovy, double aspect, double zNear, double zFar) {
+    auto tanHalfFovy = tan(fovy / static_cast<double>(2));
+//    double value[16] = {
+//        static_cast<double>(1) / (aspect * tanHalfFovy) , 0 , 0 , 0,
+//        0 , static_cast<double>(1) / (tanHalfFovy) , 0 , 0,
 //        0 , 0 , - (zFar + zNear) / (zFar - zNear) , -1 ,
-//        0 , 0 , - (static_cast<Ldouble>(2) * zFar * zNear) / (zFar - zNear) , 0
+//        0 , 0 , - (static_cast<double>(2) * zFar * zNear) / (zFar - zNear) , 0
 //    };
     
-    Ldouble value[16] = {
+    double value[16] = {
         1.0f / (aspect * tanHalfFovy) , 0 , 0 , 0,
         0 , 1.0f / (tanHalfFovy) , 0 , 0,
         0 , 0 , - zFar / (zFar - zNear) , -1 ,
@@ -146,7 +146,7 @@ Mat4 Mat4::perspective(Ldouble fovy, Ldouble aspect, Ldouble zNear, Ldouble zFar
     return Mat4(value);
 }
 
-Mat4 Mat4::scale(Ldouble scale) {
+Mat4 Mat4::scale(double scale) {
     return Mat4::scale(scale , scale , scale);
 }
 
@@ -154,8 +154,8 @@ Mat4 Mat4::scale(const Vec3 &scale) {
     return Mat4::scale(scale.x , scale.y , scale.z);
 }
 
-Mat4 Mat4::scale(Ldouble x, Ldouble y, Ldouble z) {
-    Ldouble a[16] = {
+Mat4 Mat4::scale(double x, double y, double z) {
+    double a[16] = {
         x , 0 , 0 , 0,
         0 , y , 0 , 0,
         0 , 0 , z , 0,
@@ -164,8 +164,8 @@ Mat4 Mat4::scale(Ldouble x, Ldouble y, Ldouble z) {
     return Mat4(a);
 }
 
-Mat4 Mat4::translate(Ldouble x , Ldouble y , Ldouble z) {
-    Ldouble a[16] = {
+Mat4 Mat4::translate(double x , double y , double z) {
+    double a[16] = {
         1 , 0 , 0 , 0,
         0 , 1 , 0 , 0,
         0 , 0 , 1 , 0,
@@ -179,7 +179,7 @@ Mat4 Mat4::translate(const Vec3 &vec) {
 }
 
 Mat4 Mat4::operator * (const Mat4 &other) const {
-    Ldouble ret[4][4];
+    double ret[4][4];
     for (int i = 0 ; i < 4 ; ++ i) {
         for (int j = 0 ; j < 4 ; ++ j) {
             ret[i][j] = m[i][0] * other.m[0][j]
@@ -191,16 +191,16 @@ Mat4 Mat4::operator * (const Mat4 &other) const {
     return Mat4(ret);
 }
 
-Mat4 Mat4::operator * (Ldouble num) const {
-    Ldouble t[16] = {};
+Mat4 Mat4::operator * (double num) const {
+    double t[16] = {};
     for (int i = 0 ; i < 16 ; ++ i) {
         t[i] = a[i] * num;
     }
     return Mat4(t);
 }
 
-Mat4 Mat4::operator / (Ldouble num) const {
-    Ldouble t[16] = {};
+Mat4 Mat4::operator / (double num) const {
+    double t[16] = {};
     for (int i = 0 ; i < 16 ; ++ i) {
         t[i] = a[i] / num;
     }
@@ -208,7 +208,7 @@ Mat4 Mat4::operator / (Ldouble num) const {
 }
 
 Mat4 Mat4::operator - (const Mat4 &other) const {
-    Ldouble ret[16];
+    double ret[16];
     for (int i = 0 ; i < 16; ++ i) {
         ret[i] = a[i] - other.a[i];
     }
@@ -216,7 +216,7 @@ Mat4 Mat4::operator - (const Mat4 &other) const {
 }
 
 Mat4 Mat4::operator + (const Mat4 &other) const {
-    Ldouble ret[16];
+    double ret[16];
     for (int i = 0 ; i < 16; ++ i) {
         ret[i] = a[i] + other.a[i];
     }

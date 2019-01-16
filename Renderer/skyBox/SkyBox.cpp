@@ -40,7 +40,7 @@ void SkyBox::init() {
     _shader = SkyBoxShader::create();
 }
 
-void SkyBox::draw(Ldouble dt) {
+void SkyBox::draw(double dt) {
     auto canvas = Canvas::getInstance();
     
     auto camera = Camera::getInstance();

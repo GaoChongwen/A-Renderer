@@ -15,22 +15,22 @@ public : inline void set##funcName(const Vec3 &val) { \
 public : inline Vec3 get##funcName() const { \
     return this->varName; \
 } \
-public : inline void set##funcName##X(Ldouble val){\
+public : inline void set##funcName##X(double val){\
     this->varName.x = val; \
 }\
-public : inline Ldouble get##funcName##X() { \
+public : inline double get##funcName##X() { \
     return this->varName.x; \
 } \
-public : inline void set##funcName##Y(Ldouble val){\
+public : inline void set##funcName##Y(double val){\
     this->varName.y = val; \
 }\
-public : inline Ldouble get##funcName##Y() { \
+public : inline double get##funcName##Y() { \
     return this->varName.y; \
 } \
-public : inline void set##funcName##Z(Ldouble val){\
+public : inline void set##funcName##Z(double val){\
     this->varName.z = val; \
 }\
-public : inline Ldouble get##funcName##Z() { \
+public : inline double get##funcName##Z() { \
     return this->varName.z; \
 } \
 protected : Vec3 varName;

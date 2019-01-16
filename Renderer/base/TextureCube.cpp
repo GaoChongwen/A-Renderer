@@ -8,11 +8,11 @@ Color TextureCube::sample(Vec3 pos) const {
     return sample(pos.x , pos.y, pos.z);
 }
 
-Ldouble tranform(Ldouble v) {
+double tranform(double v) {
     return (v + 1) / 2.0;
 }
 
-Color TextureCube::sample(Ldouble x, Ldouble y, Ldouble z) const {
+Color TextureCube::sample(double x, double y, double z) const {
     if (z == -1) {
         x = tranform(-x);
         y = tranform(y);

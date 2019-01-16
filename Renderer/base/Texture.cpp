@@ -19,7 +19,6 @@ void Texture::unbind() const {
 }
 
 Color Texture::sample(double u, double v) const {
-    // 纹理坐标跟像素坐标纵坐标相反
     v = 1 - v;
     auto width = _bitmap->getWidth();
     auto height = _bitmap->getHeight();

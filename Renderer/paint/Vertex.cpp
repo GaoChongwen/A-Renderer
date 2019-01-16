@@ -9,7 +9,7 @@ color(color){
 }
 
 
-Vertex Vertex::interpolate(const Vertex &vertex, Ldouble factor) const {
+Vertex Vertex::interpolate(const Vertex &vertex, double factor) const {
     Vec3 p = pos.interpolate(vertex.pos , factor);
     Vec3 nor = normal.interpolate(vertex.normal, factor);
     Vec2 t = tex.interpolate(vertex.tex , factor);
@@ -21,7 +21,7 @@ void Vertex::transform(const Mat4 &mat4) {
 //    pos = mat4.transform(pos);
 }
 
-VertexOut VertexOut::interpolateEarly(const VertexOut &target, Ldouble factor) const {
+VertexOut VertexOut::interpolateEarly(const VertexOut &target, double factor) const {
     VertexOut ret;
     ret.posWorld = posWorld.interpolate(target.posWorld, factor);
     ret.pos = pos.interpolate(target.pos , factor);
@@ -32,25 +32,25 @@ VertexOut VertexOut::interpolateEarly(const VertexOut &target, Ldouble factor) c
     return ret;
 }
 
-Ldouble VertexOut::interpolateZ(const VertexOut &target, Ldouble factor) const {
+double VertexOut::interpolateZ(const VertexOut &target, double factor) const {
     if (MathUtil::equal(oneDivZ , target.oneDivZ)) {
         return 1 / oneDivZ;
     }
-    Ldouble _oneDivZ;
+    double _oneDivZ;
     _oneDivZ = MathUtil::interpolate(oneDivZ , target.oneDivZ , factor);
     return 1 / _oneDivZ;
 }
 
-VertexOut VertexOut::interpolate(const VertexOut &target, Ldouble factor) const {
+VertexOut VertexOut::interpolate(const VertexOut &target, double factor) const {
     VertexOut ret;
     
     ret.pos = pos.interpolate(target.pos, factor);
     ret.oneDivZ = MathUtil::interpolate(oneDivZ , target.oneDivZ , factor);
     
-    Ldouble z1 = getZ();
-    Ldouble z = ret.getZ();
-    Ldouble z2 = target.getZ();
-    Ldouble cfactor;
+    double z1 = getZ();
+    double z = ret.getZ();
+    double z2 = target.getZ();
+    double cfactor;
     //透视校正
     if (z1 == z2) {
         cfactor = factor;

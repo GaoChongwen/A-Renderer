@@ -40,32 +40,32 @@ public:
  
     static vector<bool> _getbOutListForBottomPlane(Triangle &tri) ;
 
-    static inline Ldouble _getFactorForNearPlane(const VertexOut &vertIn, const VertexOut &vertOut) 
+    static inline double _getFactorForNearPlane(const VertexOut &vertIn, const VertexOut &vertOut) 
     {
     return (vertIn.pos.z - 0) / (vertIn.pos.z - vertOut.pos.z);
     }
 
-    static inline Ldouble _getFactorForFarPlane(const VertexOut &vertIn, const VertexOut &vertOut)
+    static inline double _getFactorForFarPlane(const VertexOut &vertIn, const VertexOut &vertOut)
     {
     return (vertIn.pos.z - vertIn.pos.w) / (vertIn.pos.z - vertOut.pos.z + vertOut.pos.w - vertIn.pos.w);
     }
 
-    static inline Ldouble _getFactorForRightPlane(const VertexOut &vertIn, const VertexOut &vertOut)
+    static inline double _getFactorForRightPlane(const VertexOut &vertIn, const VertexOut &vertOut)
     {
     return (vertIn.pos.x - vertIn.pos.w) / (vertIn.pos.x - vertOut.pos.x + vertOut.pos.w - vertIn.pos.w);
     }
 
-    static inline Ldouble _getFactorForLeftPlane(const VertexOut &vertIn, const VertexOut &vertOut)
+    static inline double _getFactorForLeftPlane(const VertexOut &vertIn, const VertexOut &vertOut)
     {
     return (vertIn.pos.x + vertIn.pos.w) / (vertIn.pos.x - vertOut.pos.x + vertIn.pos.w - vertOut.pos.w);
     }
 
-    static inline Ldouble _getFactorForTopPlane(const VertexOut &vertIn, const VertexOut &vertOut) 
+    static inline double _getFactorForTopPlane(const VertexOut &vertIn, const VertexOut &vertOut) 
     {
     return (vertIn.pos.y - vertIn.pos.w) / (vertIn.pos.y - vertOut.pos.y + vertOut.pos.w - vertIn.pos.w);
     }
 
-    static inline Ldouble _getFactorForBottomPlane(const VertexOut &vertIn, const VertexOut &vertOut)
+    static inline double _getFactorForBottomPlane(const VertexOut &vertIn, const VertexOut &vertOut)
     {
         return (vertIn.pos.y + vertIn.pos.w) / (vertIn.pos.y - vertOut.pos.y + vertIn.pos.w - vertOut.pos.w);
     }
