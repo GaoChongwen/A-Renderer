@@ -17,15 +17,18 @@ void ClipUtil::_doClppingInCvvAgainstLeftPlane(vector<Triangle> &triList)
         }
         if (outNum == 0)
         {
+            // 如果没有点在外部，不处理
             ++iter;
             continue;
         }
         else if (outNum == 2)
         {
+            // 如果有两个顶点在外部，构造一个新三角形（修改旧三角形�?
+            // 储存外侧顶点的索�?
             vector<int> indiceOut;
-            
+            // 内侧顶点的索�?
             int inIdx = 0;
-
+            // 找到在外侧的点的索引
             for (int i = 0; i < bList.size(); ++i)
             {
                 if (bList.at(i))
@@ -38,12 +41,15 @@ void ClipUtil::_doClppingInCvvAgainstLeftPlane(vector<Triangle> &triList)
                 }
             }
             VertexOut &vertIn = vertice.at(inIdx);
-            
+            // 遍历外侧顶点，插值生成新的顶�?
             for (int i = 0; i < indiceOut.size(); ++i)
             {
                 int index = indiceOut.at(i);
                 VertexOut &vertOut = vertice.at(index);
-                double factor = _getFactorForLeftPlane(vertIn, vertOut);
+                // ax + (cx - ax) * factor = newX
+                // aw + (cw - aw) * factor = newW
+                // newX = - newW
+                Ldouble factor = _getFactorForLeftPlane(vertIn, vertOut);
                 VertexOut vertNew = vertIn.interpolate(vertOut, factor);
                 vertice[index] = vertNew;
             }
@@ -54,10 +60,12 @@ void ClipUtil::_doClppingInCvvAgainstLeftPlane(vector<Triangle> &triList)
         }
         else if (outNum == 1)
         {
+            // 如果有一个顶点在外部 ,构造一个梯形（修改旧三角形+添加一个新三角形）
+            // 储存内侧顶点的索�?
             vector<int> indiceIn;
-            
+            // 外侧顶点的索�?
             int outIdx = 0;
-            
+            // 找到内侧的点的索�?
             for (int i = 0; i < bList.size(); ++i)
             {
                 if (!bList.at(i))
@@ -70,13 +78,18 @@ void ClipUtil::_doClppingInCvvAgainstLeftPlane(vector<Triangle> &triList)
                 }
             }
             VertexOut &vertOut = vertice.at(outIdx);
+            // 遍历内侧顶点，插值生成新的顶点，并添加三角形
             vector<VertexOut> vertNewList;
             for (int i = 0; i < indiceIn.size(); ++i)
             {
-                
+                // 生成对应新顶�?
                 int index = indiceIn.at(i);
                 VertexOut vertIn = vertice.at(index);
-                double factor = _getFactorForLeftPlane(vertIn, vertOut);
+                // ax + (cx - ax) * factor = newX
+                // aw + (cw - aw) * factor = newW
+                // newX = - newW
+                // Ldouble factor = (vertIn.pos.x + vertIn.pos.w) / (vertIn.pos.x - vertOut.pos.x + vertIn.pos.w - vertOut.pos.w);
+                Ldouble factor = _getFactorForLeftPlane(vertIn, vertOut);
                 VertexOut vertNew = vertIn.interpolateEarly(vertOut, factor);
                 vertNewList.push_back(vertIn);
                 vertNewList.push_back(vertNew);
@@ -91,6 +104,7 @@ void ClipUtil::_doClppingInCvvAgainstLeftPlane(vector<Triangle> &triList)
         }
         else if (outNum == 3)
         {
+            // 如果有三个顶点在外部，整体剔�?
             iter = triList.erase(iter);
         }
     }
@@ -113,15 +127,18 @@ void ClipUtil::_doClppingInCvvAgainstRightPlane(vector<Triangle> &triList)
         }
         if (outNum == 0)
         {
+            // 如果没有点在外部，不处理
             ++iter;
             continue;
         }
         else if (outNum == 2)
         {
+            // 如果有两个顶点在外部，构造一个新三角形（修改旧三角形�?
+            // 储存外侧顶点的索�?
             vector<int> indiceOut;
-        
+            // 内侧顶点的索�?
             int inIdx = 0;
-            
+            // 找到在外侧的点的索引
             for (int i = 0; i < bList.size(); ++i)
             {
                 if (bList.at(i))
@@ -134,12 +151,15 @@ void ClipUtil::_doClppingInCvvAgainstRightPlane(vector<Triangle> &triList)
                 }
             }
             VertexOut &vertIn = vertice.at(inIdx);
-
+            // 遍历外侧顶点，插值生成新的顶�?
             for (int i = 0; i < indiceOut.size(); ++i)
             {
                 int index = indiceOut.at(i);
                 VertexOut &vertOut = vertice.at(index);
-                double factor = _getFactorForRightPlane(vertIn, vertOut);
+                // ax + (cx - ax) * factor = newX
+                // aw + (cw - aw) * factor = newW
+                // newX = newW
+                Ldouble factor = _getFactorForRightPlane(vertIn, vertOut);
                 VertexOut vertNew = vertIn.interpolate(vertOut, factor);
                 vertice[index] = vertNew;
             }
@@ -150,9 +170,12 @@ void ClipUtil::_doClppingInCvvAgainstRightPlane(vector<Triangle> &triList)
         }
         else if (outNum == 1)
         {
+            // 如果有一个顶点在外部 ,构造一个梯形（修改旧三角形+添加一个新三角形）
+            // 储存内侧顶点的索�?
             vector<int> indiceIn;
-            
+            // 外侧顶点的索�?
             int outIdx = 0;
+            // 找到内侧的点的索�?
             for (int i = 0; i < bList.size(); ++i)
             {
                 if (!bList.at(i))
@@ -165,12 +188,18 @@ void ClipUtil::_doClppingInCvvAgainstRightPlane(vector<Triangle> &triList)
                 }
             }
             VertexOut &vertOut = vertice.at(outIdx);
+            // 遍历内侧顶点，插值生成新的顶点，并添加三角形
             vector<VertexOut> vertNewList;
             for (int i = 0; i < indiceIn.size(); ++i)
             {
+                // 生成对应新顶�?
                 int index = indiceIn.at(i);
                 VertexOut vertIn = vertice.at(index);
-                double factor = _getFactorForRightPlane(vertIn, vertOut);
+                // ax + (cx - ax) * factor = newX
+                // aw + (cw - aw) * factor = newW
+                // newX = newW
+                // Ldouble factor = (vertIn.pos.x - vertIn.pos.w) / (vertIn.pos.x - vertOut.pos.x + vertOut.pos.w - vertIn.pos.w);
+                Ldouble factor = _getFactorForRightPlane(vertIn, vertOut);
                 VertexOut vertNew = vertIn.interpolateEarly(vertOut, factor);
                 vertNewList.push_back(vertIn);
                 vertNewList.push_back(vertNew);
@@ -185,6 +214,7 @@ void ClipUtil::_doClppingInCvvAgainstRightPlane(vector<Triangle> &triList)
         }
         else if (outNum == 3)
         {
+            // 如果有三个顶点在外部，整体剔�?
             iter = triList.erase(iter);
         }
     }
@@ -207,13 +237,18 @@ void ClipUtil::_doClppingInCvvAgainstTopPlane(vector<Triangle> &triList)
         }
         if (outNum == 0)
         {
+            // 如果没有点在外部，不处理
             ++iter;
             continue;
         }
         else if (outNum == 2)
         {
+            // 如果有两个顶点在外部，构造一个新三角形（修改旧三角形�?
+            // 储存外侧顶点的索�?
             vector<int> indiceOut;
+            // 内侧顶点的索�?
             int inIdx = 0;
+            // 找到在外侧的点的索引
             for (int i = 0; i < bList.size(); ++i)
             {
                 if (bList.at(i))
@@ -226,6 +261,7 @@ void ClipUtil::_doClppingInCvvAgainstTopPlane(vector<Triangle> &triList)
                 }
             }
             VertexOut &vertIn = vertice.at(inIdx);
+            // 遍历外侧顶点，插值生成新的顶�?
             for (int i = 0; i < indiceOut.size(); ++i)
             {
                 int index = indiceOut.at(i);
@@ -233,7 +269,7 @@ void ClipUtil::_doClppingInCvvAgainstTopPlane(vector<Triangle> &triList)
                 // ay + (cy - ay) * factor = newY
                 // aw + (cw - aw) * factor = newW
                 // newY = newW
-                double factor = _getFactorForTopPlane(vertIn, vertOut);
+                Ldouble factor = _getFactorForTopPlane(vertIn, vertOut);
                 VertexOut vertNew = vertIn.interpolate(vertOut, factor);
                 vertice[index] = vertNew;
             }
@@ -244,8 +280,12 @@ void ClipUtil::_doClppingInCvvAgainstTopPlane(vector<Triangle> &triList)
         }
         else if (outNum == 1)
         {
+            // 如果有一个顶点在外部 ,构造一个梯形（修改旧三角形+添加一个新三角形）
+            // 储存内侧顶点的索�?
             vector<int> indiceIn;
+            // 外侧顶点的索�?
             int outIdx = 0;
+            // 找到内侧的点的索�?
             for (int i = 0; i < bList.size(); ++i)
             {
                 if (!bList.at(i))
@@ -258,12 +298,18 @@ void ClipUtil::_doClppingInCvvAgainstTopPlane(vector<Triangle> &triList)
                 }
             }
             VertexOut &vertOut = vertice.at(outIdx);
+            // 遍历内侧顶点，插值生成新的顶点，并添加三角形
             vector<VertexOut> vertNewList;
             for (int i = 0; i < indiceIn.size(); ++i)
             {
+                // 生成对应新顶�?
                 int index = indiceIn.at(i);
                 VertexOut vertIn = vertice.at(index);
-                double factor = _getFactorForTopPlane(vertIn, vertOut);
+                // ay + (cy - ay) * factor = newY
+                // aw + (cw - aw) * factor = newW
+                // newY = newW
+                // Ldouble factor = (vertIn.pos.y - vertIn.pos.w) / (vertIn.pos.y - vertOut.pos.y + vertOut.pos.w - vertIn.pos.w);
+                Ldouble factor = _getFactorForTopPlane(vertIn, vertOut);
                 VertexOut vertNew = vertIn.interpolateEarly(vertOut, factor);
                 vertNewList.push_back(vertIn);
                 vertNewList.push_back(vertNew);
@@ -301,13 +347,18 @@ void ClipUtil::_doClppingInCvvAgainstBottomPlane(vector<Triangle> &triList)
         }
         if (outNum == 0)
         {
+            // 如果没有点在外部，不处理
             ++iter;
             continue;
         }
         else if (outNum == 2)
         {
+            // 如果有两个顶点在外部，构造一个新三角形（修改旧三角形�?
+            // 储存外侧顶点的索�?
             vector<int> indiceOut;
+            // 内侧顶点的索�?
             int inIdx = 0;
+            // 找到在外侧的点的索引
             for (int i = 0; i < bList.size(); ++i)
             {
                 if (bList.at(i))
@@ -320,11 +371,15 @@ void ClipUtil::_doClppingInCvvAgainstBottomPlane(vector<Triangle> &triList)
                 }
             }
             VertexOut &vertIn = vertice.at(inIdx);
+            // 遍历外侧顶点，插值生成新的顶�?
             for (int i = 0; i < indiceOut.size(); ++i)
             {
                 int index = indiceOut.at(i);
                 VertexOut &vertOut = vertice.at(index);
-                double factor = _getFactorForBottomPlane(vertIn, vertOut);
+                // ay + (cy - ay) * factor = newY
+                // aw + (cw - aw) * factor = newW
+                // newY = - newW
+                Ldouble factor = _getFactorForBottomPlane(vertIn, vertOut);
                 VertexOut vertNew = vertIn.interpolate(vertOut, factor);
                 vertice[index] = vertNew;
             }
@@ -335,8 +390,12 @@ void ClipUtil::_doClppingInCvvAgainstBottomPlane(vector<Triangle> &triList)
         }
         else if (outNum == 1)
         {
+            // 如果有一个顶点在外部 ,构造一个梯形（修改旧三角形+添加一个新三角形）
+            // 储存内侧顶点的索�?
             vector<int> indiceIn;
+            // 外侧顶点的索�?
             int outIdx = 0;
+            // 找到内侧的点的索�?
             for (int i = 0; i < bList.size(); ++i)
             {
                 if (!bList.at(i))
@@ -349,12 +408,18 @@ void ClipUtil::_doClppingInCvvAgainstBottomPlane(vector<Triangle> &triList)
                 }
             }
             VertexOut &vertOut = vertice.at(outIdx);
+            // 遍历内侧顶点，插值生成新的顶点，并添加三角形
             vector<VertexOut> vertNewList;
             for (int i = 0; i < indiceIn.size(); ++i)
             {
+                // 生成对应新顶�?
                 int index = indiceIn.at(i);
                 VertexOut vertIn = vertice.at(index);
-                double factor = _getFactorForBottomPlane(vertIn, vertOut);
+                // ay + (cy - ay) * factor = newY
+                // aw + (cw - aw) * factor = newW
+                // newY = - newW
+                // Ldouble factor = (vertIn.pos.y + vertIn.pos.w) / (vertIn.pos.y - vertOut.pos.y + vertIn.pos.w - vertOut.pos.w);
+                Ldouble factor = _getFactorForBottomPlane(vertIn, vertOut);
 
                 VertexOut vertNew = vertIn.interpolateEarly(vertOut, factor);
                 vertNewList.push_back(vertIn);
@@ -370,6 +435,7 @@ void ClipUtil::_doClppingInCvvAgainstBottomPlane(vector<Triangle> &triList)
         }
         else if (outNum == 3)
         {
+            // 如果有三个顶点在外部，整体剔�?
             iter = triList.erase(iter);
         }
     }
@@ -392,13 +458,18 @@ void ClipUtil::_doClppingInCvvAgainstFarPlane(vector<Triangle> &triList)
         }
         if (outNum == 0)
         {
+            // 如果没有点在外部，不处理
             ++iter;
             continue;
         }
         else if (outNum == 2)
         {
+            // 如果有两个顶点在外部，构造一个新三角形（修改旧三角形�?
+            // 储存外侧顶点的索�?
             vector<int> indiceOut;
+            // 内侧顶点的索�?
             int inIdx = 0;
+            // 找到在外侧的点的索引
             for (int i = 0; i < bList.size(); ++i)
             {
                 if (bList.at(i))
@@ -411,12 +482,13 @@ void ClipUtil::_doClppingInCvvAgainstFarPlane(vector<Triangle> &triList)
                 }
             }
             VertexOut &vertIn = vertice.at(inIdx);
+            // 遍历外侧顶点，插值生成新的顶�?
             for (int i = 0; i < indiceOut.size(); ++i)
             {
                 int index = indiceOut.at(i);
                 VertexOut &vertOut = vertice.at(index);
 
-                double factor = _getFactorForFarPlane(vertIn, vertOut);
+                Ldouble factor = _getFactorForFarPlane(vertIn, vertOut);
 
                 VertexOut vertNew = vertIn.interpolate(vertOut, factor);
                 vertice[index] = vertNew;
@@ -428,9 +500,12 @@ void ClipUtil::_doClppingInCvvAgainstFarPlane(vector<Triangle> &triList)
         }
         else if (outNum == 1)
         {
+            // 如果有一个顶点在外部 ,构造一个梯形（修改旧三角形+添加一个新三角形）
+            // 储存内侧顶点的索�?
             vector<int> indiceIn;
+            // 外侧顶点的索�?
             int outIdx = 0;
-            
+            // 找到内侧的点的索�?
             for (int i = 0; i < bList.size(); ++i)
             {
                 if (!bList.at(i))
@@ -443,13 +518,15 @@ void ClipUtil::_doClppingInCvvAgainstFarPlane(vector<Triangle> &triList)
                 }
             }
             VertexOut &vertOut = vertice.at(outIdx);
+            // 遍历内侧顶点，插值生成新的顶点，并添加三角形
             vector<VertexOut> vertNewList;
             for (int i = 0; i < indiceIn.size(); ++i)
             {
+                // 生成对应新顶�?
                 int index = indiceIn.at(i);
                 VertexOut vertIn = vertice.at(index);
 
-                double factor = _getFactorForFarPlane(vertIn, vertOut);
+                Ldouble factor = _getFactorForFarPlane(vertIn, vertOut);
                 VertexOut vertNew = vertIn.interpolateEarly(vertOut, factor);
                 vertNewList.push_back(vertIn);
                 vertNewList.push_back(vertNew);
@@ -464,6 +541,7 @@ void ClipUtil::_doClppingInCvvAgainstFarPlane(vector<Triangle> &triList)
         }
         else if (outNum == 3)
         {
+            // 如果有三个顶点在外部，整体剔�?
             iter = triList.erase(iter);
         }
     }
@@ -487,13 +565,18 @@ void ClipUtil::_doClppingInCvvAgainstNearPlane(vector<Triangle> &triList)
         }
         if (outNum == 0)
         {
+            // 如果没有点在外部，不处理
             ++iter;
             continue;
         }
         else if (outNum == 2)
         {
+            // 如果有两个顶点在外部，构造一个新三角形（修改旧三角形�?
+            // 储存外侧顶点的索�?
             vector<int> indiceOut;
+            // 内侧顶点的索�?
             int inIdx = 0;
+            // 找到在外侧的点的索引
             for (int i = 0; i < bList.size(); ++i)
             {
                 if (bList.at(i))
@@ -506,11 +589,12 @@ void ClipUtil::_doClppingInCvvAgainstNearPlane(vector<Triangle> &triList)
                 }
             }
             VertexOut &vertIn = vertice.at(inIdx);
+            // 遍历外侧顶点，插值生成新的顶�?
             for (int i = 0; i < indiceOut.size(); ++i)
             {
                 int index = indiceOut.at(i);
                 VertexOut &vertOut = vertice.at(index);
-                double factor = _getFactorForNearPlane(vertIn, vertOut);
+                Ldouble factor = _getFactorForNearPlane(vertIn, vertOut);
 
                 VertexOut vertNew = vertIn.interpolate(vertOut, factor);
                 vertice[index] = vertNew;
@@ -522,8 +606,12 @@ void ClipUtil::_doClppingInCvvAgainstNearPlane(vector<Triangle> &triList)
         }
         else if (outNum == 1)
         {
+            // 如果有一个顶点在外部 ,构造一个梯形（修改旧三角形+添加一个新三角形）
+            // 储存内侧顶点的索�?
             vector<int> indiceIn;
+            // 外侧顶点的索�?
             int outIdx = 0;
+            // 找到内侧的点的索�?
             for (int i = 0; i < bList.size(); ++i)
             {
                 if (!bList.at(i))
@@ -536,12 +624,14 @@ void ClipUtil::_doClppingInCvvAgainstNearPlane(vector<Triangle> &triList)
                 }
             }
             VertexOut &vertOut = vertice.at(outIdx);
+            // 遍历内侧顶点，插值生成新的顶点，并添加三角形
             vector<VertexOut> vertNewList;
             for (int i = 0; i < indiceIn.size(); ++i)
             {
+                // 生成对应新顶�?
                 int index = indiceIn.at(i);
                 VertexOut vertIn = vertice.at(index);
-                double factor = _getFactorForNearPlane(vertIn, vertOut);
+                Ldouble factor = _getFactorForNearPlane(vertIn, vertOut);
                 VertexOut vertNew = vertIn.interpolateEarly(vertOut, factor);
                 vertNewList.push_back(vertIn);
                 vertNewList.push_back(vertNew);
@@ -556,6 +646,7 @@ void ClipUtil::_doClppingInCvvAgainstNearPlane(vector<Triangle> &triList)
         }
         else if (outNum == 3)
         {
+            // 如果有三个顶点在外部，整体剔�?
             iter = triList.erase(iter);
         }
     }

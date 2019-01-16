@@ -26,7 +26,7 @@ public:
      */
     Mat4 getViewProjectionMat() const;
     
-    inline void setNearAndFarPlane(double n , double f){
+    inline void setNearAndFarPlane(Ldouble n , Ldouble f){
         setNearPlane(n);
         setFarPlane(f);
     }
@@ -35,33 +35,33 @@ public:
     
     Mat4 getCurDirectionMat() const;
     
-    inline void offsetDirection(double verticalAngle , double horizontalAngle){
+    inline void offsetDirection(Ldouble verticalAngle , Ldouble horizontalAngle){
         _pitch += verticalAngle;
         _yaw += horizontalAngle;
         _normalizeAngle();
     }
     
-    inline double getNearPlane(){
+    inline Ldouble getNearPlane(){
         return _nearPlane;
     }
     
-    inline void setNearPlane(double val){
+    inline void setNearPlane(Ldouble val){
         _nearPlane = val;
     }
     
-    inline double getFarPlane(){
+    inline Ldouble getFarPlane(){
         return _farPlane;
     }
     
-    inline void setFarPlane(double val){
+    inline void setFarPlane(Ldouble val){
         _farPlane = val;
     }
     
-    inline void setMoveVelo(double val){
+    inline void setMoveVelo(Ldouble val){
         _moveVelo = val;
     }
     
-    inline double getMoveVelo(){
+    inline Ldouble getMoveVelo(){
         return _moveVelo;
     }
     
@@ -94,11 +94,11 @@ public:
      
      The value must be between 0 and 180.
      */
-    inline double getFieldOfView(){
+    inline Ldouble getFieldOfView(){
         return _fovy;
     }
     
-    inline void setFieldOfView(double fov){
+    inline void setFieldOfView(Ldouble fov){
         if (fov > _maxFov) {
             _fovy = _maxFov;
         }else if(fov < _minFov){
@@ -131,23 +131,23 @@ protected:
     
     Vec3 _headVec;
     
-    double _pitch = 0;
+    Ldouble _pitch = 0;
     
-    double _yaw = 0;
+    Ldouble _yaw = 0;
     
-    double _maxPitch = 150;
+    Ldouble _maxPitch = 150;
     
-    double _nearPlane;
+    Ldouble _nearPlane;
     
-    double _farPlane;
+    Ldouble _farPlane;
     
-    double _moveVelo = 100;
+    Ldouble _moveVelo = 100;
     
-    double _minFov;
+    Ldouble _minFov;
     
-    double _fovy;
+    Ldouble _fovy;
     
-    double _maxFov;
+    Ldouble _maxFov;
 };
 
 #endif /* Camera_hpp */

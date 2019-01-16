@@ -12,24 +12,24 @@ class Vec3 {
 
 public:
     union {
-        double u;
-        double x;
-        double r;
+        Ldouble u;
+        Ldouble x;
+        Ldouble r;
     };
     
     union {
-        double v;
-        double y;
-        double g;
+        Ldouble v;
+        Ldouble y;
+        Ldouble g;
     };
     
     union {
-        double w;
-        double z;
-        double b;
+        Ldouble w;
+        Ldouble z;
+        Ldouble b;
     };
     
-    double dot(const Vec3 &other) const;
+    Ldouble dot(const Vec3 &other) const;
     
     Vec3 reflect(const Vec3 &normal) const;
     
@@ -42,25 +42,25 @@ public:
         cout << "z = " << z << endl;
     }
     
-    Vec3(double x = 0 , double y = 0 , double z = 0);
+    Vec3(Ldouble x = 0 , Ldouble y = 0 , Ldouble z = 0);
     
     inline Vec3 getNormalize() const {
-        double length = getLength();
+        Ldouble length = getLength();
         Vec3 ret = Vec3(x / length , y / length , z / length);
         return ret;
     }
     
-    inline double getLength() const {
+    inline Ldouble getLength() const {
         auto ret = sqrt((x * x + y * y + z * z));
         return ret;
     }
     
-    Vec3 interpolate(const Vec3 &other , double factor) const {
+    Vec3 interpolate(const Vec3 &other , Ldouble factor) const {
         auto ret = *this + (other - *this) * factor;
         return ret;
     }
     
-    Vec3 operator * (double factor) const {
+    Vec3 operator * (Ldouble factor) const {
         return Vec3(x * factor , y * factor , z * factor);
     }
     
@@ -87,26 +87,26 @@ class Vec4 {
     
 public:
     union {
-        double r;
-        double x;
+        Ldouble r;
+        Ldouble x;
     };
     
     union {
-        double g;
-        double y;
+        Ldouble g;
+        Ldouble y;
     };
     
     union {
-        double b;
-        double z;
+        Ldouble b;
+        Ldouble z;
     };
     
     union {
-        double a;
-        double w;
+        Ldouble a;
+        Ldouble w;
     };
     
-    Vec4(const Vec3 &vec , double w = 1.0f){
+    Vec4(const Vec3 &vec , Ldouble w = 1.0f){
         init(vec.x , vec.y , vec.z , w);
     }
     
@@ -118,20 +118,20 @@ public:
         cout << "w = " << w << endl;
     }
     
-    Vec4(double x = 0.0f , double y = 0.0f , double z = 0.0f , double w = 1.0f);
+    Vec4(Ldouble x = 0.0f , Ldouble y = 0.0f , Ldouble z = 0.0f , Ldouble w = 1.0f);
     
-    void init(double x = 0.0f , double y = 0.0f , double z = 0.0f , double w = 1.0f) {
+    void init(Ldouble x = 0.0f , Ldouble y = 0.0f , Ldouble z = 0.0f , Ldouble w = 1.0f) {
         this->x = x;
         this->y = y;
         this->z = z;
         this->w = w;
     }
     
-    double dot(const Vec4 &other) const;
+    Ldouble dot(const Vec4 &other) const;
     
     Vec4 cross(const Vec4 &other) const;
     
-    Vec4 interpolate(const Vec4 &other , double factor) const {
+    Vec4 interpolate(const Vec4 &other , Ldouble factor) const {
         auto ret = *this + (other - *this) * factor;
         return ret;
     }
@@ -160,7 +160,7 @@ public:
         return ret;
     }
     
-    Vec4 operator * (double factor) const {
+    Vec4 operator * (Ldouble factor) const {
         auto ret = Vec4(x * factor , y * factor , z * factor , w * factor);
         return ret;
     }
@@ -182,27 +182,27 @@ class Vec2 {
     
 public:
     union {
-        double u;
-        double x;
+        Ldouble u;
+        Ldouble x;
     };
     
     union {
-        double v;
-        double y;
+        Ldouble v;
+        Ldouble y;
     };
     
-    Vec2(double u = 0 , double v = 0):
+    Vec2(Ldouble u = 0 , Ldouble v = 0):
     u(u),
     v(v) {
         
     }
     
-    Vec2 interpolate(const Vec2 &other , double factor) const {
+    Vec2 interpolate(const Vec2 &other , Ldouble factor) const {
         auto ret = *this + (other - *this) * factor;
         return ret;
     }
     
-    Vec2 operator * (double factor) const {
+    Vec2 operator * (Ldouble factor) const {
         return Vec2(u * factor , v * factor);
     }
     

@@ -1,3 +1,11 @@
+//
+//  Triangle.h
+//  Z-Renderer
+//
+//  Created by 贺鹏程 on 2019/1/15.
+//  Copyright © 2019年 SATAN_Z. All rights reserved.
+//
+
 #ifndef Triangle_h
 #define Triangle_h
 

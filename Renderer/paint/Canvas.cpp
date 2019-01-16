@@ -28,7 +28,7 @@ Canvas::Canvas(int width, int height) : _surface(nullptr),
                                         _shader(nullptr),
                                         _textureCube(nullptr)
 {
-    _depthBuffer = new double[_bufferSize]();
+    _depthBuffer = new Ldouble[_bufferSize]();
     _shader = new Shader();
 
     //    auto sp = Sprite3D::create("nanosuit.obj");
@@ -262,8 +262,8 @@ void Canvas::_triangleRasterize(Triangle &tri)
     }
     else
     {
-        double ty = pVert2->pos.y;
-        double factor = (ty - pVert1->pos.y) / (pVert3->pos.y - pVert1->pos.y);
+        Ldouble ty = pVert2->pos.y;
+        Ldouble factor = (ty - pVert1->pos.y) / (pVert3->pos.y - pVert1->pos.y);
         VertexOut tVert = pVert1->interpolate(*pVert3, factor);
         _triangleTopRasterize(*pVert1, tVert, *pVert2);
         _triangleBottomRasterize(*pVert2, tVert, *pVert3);
@@ -292,8 +292,8 @@ void Canvas::_triangleTopRasterize(const VertexOut &v1, const VertexOut &v2, con
 
     for (int py = startPY; py * sign <= sign * endPY; py = py + sign)
     {
-        double ld = 1.0f;
-        double factor = (py - startPY) * ld / (endPY - startPY);
+        Ldouble ld = 1.0f;
+        Ldouble factor = (py - startPY) * ld / (endPY - startPY);
         VertexOut vertStart = pVert1->interpolate(*pVert2, factor);
         VertexOut vertEnd = pVert1->interpolate(*pVert3, factor);
         scanLineFill(vertStart, vertEnd, py);
@@ -322,8 +322,8 @@ void Canvas::_triangleBottomRasterize(const VertexOut &v1, const VertexOut &v2, 
 
     for (int py = startPY; py * sign < sign * endPY; py = py + sign)
     {
-        double ld = 1.0f;
-        double factor = (py - startPY) * ld / (endPY - startPY);
+        Ldouble ld = 1.0f;
+        Ldouble factor = (py - startPY) * ld / (endPY - startPY);
         VertexOut vertStart = pVert3->interpolate(*pVert2, factor);
         VertexOut vertEnd = pVert3->interpolate(*pVert1, factor);
         scanLineFill(vertStart, vertEnd, py);
@@ -344,7 +344,7 @@ void Canvas::scanLineFill(VertexOut &v1, VertexOut &v2, int yIndex)
 
     if (startX == endX)
     {
-        double z = pVert1->getZ();
+        Ldouble z = pVert1->getZ();
         if (isPassDepth(startX, yIndex, z))
         {
             Color normalColor = _texture_normal->sample(pVert1->tex.u, pVert1->tex.v);
@@ -357,8 +357,8 @@ void Canvas::scanLineFill(VertexOut &v1, VertexOut &v2, int yIndex)
     }
     for (int x = startX; x <= endX; ++x)
     {
-        double factor = (x - startX) * 1.0f / (endX - startX);
-        double z = pVert1->interpolateZ(*pVert2, factor);
+        Ldouble factor = (x - startX) * 1.0f / (endX - startX);
+        Ldouble z = pVert1->interpolateZ(*pVert2, factor);
         if (isPassDepth(x, yIndex, z))
         {
             VertexOut fragment = pVert1->interpolate(*pVert2, factor);
@@ -408,7 +408,7 @@ void Canvas::lineBresenham(const VertexOut &vert1, const VertexOut &vert2)
 
     if (px1 == px2 && py1 == py2)
     {
-        double z = pVert1->getZ();
+        Ldouble z = pVert1->getZ();
         if (isPassDepth(px1, py1, pVert1->getZ()))
         {
             drawPixel(px1, py1, z, _shader->fs(vert1));
@@ -436,8 +436,8 @@ void Canvas::lineBresenham(const VertexOut &vert1, const VertexOut &vert2)
 
         for (int x = px1, y = py1; x <= px2; ++x)
         {
-            double factor = static_cast<double>((x - px1) * 1.0 / (px2 - px1));
-            double z = pVert1->interpolateZ(*pVert2, factor);
+            Ldouble factor = static_cast<Ldouble>((x - px1) * 1.0 / (px2 - px1));
+            Ldouble z = pVert1->interpolateZ(*pVert2, factor);
             if (isPassDepth(x, y, z))
             {
                 VertexOut fragment = pVert1->interpolate(*pVert2, factor);
@@ -469,8 +469,8 @@ void Canvas::lineBresenham(const VertexOut &vert1, const VertexOut &vert2)
 
         for (int x = px1, y = py1; y <= py2; ++y)
         {
-            double factor = static_cast<double>((y - py1) * 1.0 / (py2 - py1));
-            double z = pVert1->interpolateZ(*pVert2, factor);
+            Ldouble factor = static_cast<Ldouble>((y - py1) * 1.0 / (py2 - py1));
+            Ldouble z = pVert1->interpolateZ(*pVert2, factor);
             if (isPassDepth(x, y, z))
             {
                 VertexOut fragment = pVert1->interpolate(*pVert2, factor);

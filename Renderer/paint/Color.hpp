@@ -10,15 +10,15 @@ class Color {
 public:
     union {
         struct {
-            double r;
-            double g;
-            double b;
-            double a;
+            Ldouble r;
+            Ldouble g;
+            Ldouble b;
+            Ldouble a;
         };
-        double e[4];
+        Ldouble e[4];
     };
     
-    Color(double r = 1.0f , double g = 1.0f , double b = 1.0f , double a = 1.0f):
+    Color(Ldouble r = 1.0f , Ldouble g = 1.0f , Ldouble b = 1.0f , Ldouble a = 1.0f):
     r(r),
     g(g),
     b(b),
@@ -33,18 +33,18 @@ public:
     }
     
     static Color randomColor() {
-        double r = (rand() % 255) / 255.0;
-        double g = (rand() % 255) / 255.0;
-        double b = (rand() % 255) / 255.0;
+        Ldouble r = (rand() % 255) / 255.0;
+        Ldouble g = (rand() % 255) / 255.0;
+        Ldouble b = (rand() % 255) / 255.0;
         return Color(r, g, b, 1);
     };
     
     uint32_t uint32() const {
         
-        double fr = fmin(r, (double)1.0f);
-        double fg = fmin(g, (double)1.0f);
-        double fb = fmin(b, (double)1.0f);
-        double fa = fmin(a, (double)1.0f);
+        double fr = fmin(r, (Ldouble)1.0f);
+        double fg = fmin(g, (Ldouble)1.0f);
+        double fb = fmin(b, (Ldouble)1.0f);
+        double fa = fmin(a, (Ldouble)1.0f);
         
         uint32_t R = (uint32_t)(fr * 255.0f);
         uint32_t G = (uint32_t)(fg * 255.0f);
@@ -64,7 +64,7 @@ public:
         return ret;
     };
     
-    Color operator * (double factor) const {
+    Color operator * (Ldouble factor) const {
         auto ret = Color(r * factor, g * factor, b * factor, a * factor);
         return ret;
     };
@@ -73,7 +73,7 @@ public:
         return Color(r * color.r , g * color.g , b * color.b , a * color.a);
     }
     
-    Color interpolate(const Color &c, double factor) const {
+    Color interpolate(const Color &c, Ldouble factor) const {
         auto ret = *this + (c - *this) * factor;
         return ret;
     };
