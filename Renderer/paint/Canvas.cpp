@@ -181,6 +181,8 @@ bool Canvas::isCulling(const Triangle &tri) const
 
 void Canvas::processTriangle(Triangle &tri)
 {
+    _shader->setTBN(tri);
+    
     if (isCulling(tri)){
         return;
     }
@@ -233,7 +235,8 @@ void Canvas::_drawTriangle(Triangle &tri)
 
 void Canvas::_triangleRasterize(Triangle &tri)
 {
-
+    this->_shader->setTBN(tri);
+    
     VertexOut const *pVert1 = &(tri.v1);
     VertexOut const *pVert2 = &(tri.v2);
     VertexOut const *pVert3 = &(tri.v3);
@@ -247,6 +250,7 @@ void Canvas::_triangleRasterize(Triangle &tri)
     pVert1 = vector.at(0);
     pVert2 = vector.at(1);
     pVert3 = vector.at(2);
+    
 
     if (MathUtil::equal(pVert1->pos.y, pVert2->pos.y))
     {
@@ -326,11 +330,11 @@ void Canvas::_triangleBottomRasterize(const VertexOut &v1, const VertexOut &v2, 
     };
 }
 
-void Canvas::scanLineFill(const VertexOut &v1, const VertexOut &v2, int yIndex)
+void Canvas::scanLineFill(VertexOut &v1, VertexOut &v2, int yIndex)
 {
 
-    const VertexOut *pVert1 = &v1;
-    const VertexOut *pVert2 = &v2;
+    VertexOut *pVert1 = &v1;
+    VertexOut *pVert2 = &v2;
 
     pVert1 = v1.pos.x > v2.pos.x ? &v2 : &v1;
     pVert2 = v1.pos.x < v2.pos.x ? &v2 : &v1;
@@ -343,6 +347,10 @@ void Canvas::scanLineFill(const VertexOut &v1, const VertexOut &v2, int yIndex)
         Ldouble z = pVert1->getZ();
         if (isPassDepth(startX, yIndex, z))
         {
+            Color normalColor = _texture_normal->sample(pVert1->tex.u, pVert1->tex.v);
+            pVert1->color_normal.x = normalColor.r;
+            pVert1->color_normal.y = normalColor.g;
+            pVert1->color_normal.z = normalColor.b;
             drawPixel(startX, yIndex, z, _shader->fs(*pVert1));
             return;
         }

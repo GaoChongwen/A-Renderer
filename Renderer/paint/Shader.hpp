@@ -4,9 +4,18 @@
 #include "Vertex.hpp"
 #include "Mat4.hpp"
 #include "Ref.hpp"
+#include "Triangle.hpp"
 
 class Shader : public Ref {
 public:
+    Mat4 _TBN;
+    Mat4 _model;
+    Mat4 _view;
+    Mat4 _projection;
+    
+    Mat4 _mv;
+    
+    Mat4 _mvp;
     Shader():
     _model(Mat4::identity()),
     _view(Mat4::identity()),
@@ -40,7 +49,7 @@ public:
         updateMvp();
     }
     
-    virtual void use() const;
+    virtual void use();
     
     virtual void unUse() const;
     
@@ -80,6 +89,8 @@ public:
     virtual Mat4 getMvp() const {
         return _mvp;
     }
+//    
+    void setTBN(Triangle & triangle);
     
 protected:
     
@@ -91,13 +102,7 @@ protected:
         _mvp = _model * _view * _projection;
     }
     
-    Mat4 _model;
-    Mat4 _view;
-    Mat4 _projection;
     
-    Mat4 _mv;
-    
-    Mat4 _mvp;
     
 };
 

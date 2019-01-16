@@ -10,6 +10,7 @@
 #include "Node.hpp"
 #include "Texture.hpp"
 #include "TextureCube.hpp"
+#include "Triangle.hpp"
 
 enum DrawMode {
     Frame,
@@ -20,25 +21,6 @@ enum CullingMode {
     None,  //不处�?
     CCW,  // 逆时�?
     CW,  //顺时�?
-};
-
-class Triangle {
-public:
-
-    Triangle(const VertexOut &v1 , const VertexOut &v2 , const VertexOut &v3):
-    v1(v1),
-    v2(v2),
-    v3(v3){
-        
-    }
-    
-    Triangle() {
-
-    }
-
-    VertexOut v1;
-    VertexOut v2;
-    VertexOut v3;
 };
 
 class Canvas {
@@ -64,7 +46,7 @@ public:
 
     void lineBresenham(const VertexOut &v1 , const VertexOut &v2);
     
-    void scanLineFill(const VertexOut &v1 , const VertexOut &v2 , int yIndex);
+    void scanLineFill(VertexOut &v1 ,VertexOut &v2 , int yIndex);
     
     void drawPixel(int px , int py , Ldouble z , const Color &color) {
         if (!isPassClip(px , py)) {
@@ -127,7 +109,7 @@ public:
         return z <= _depthBuffer[index];
     }
     
-    inline void setShader(const Shader * shader) {
+    inline void setShader(Shader * shader) {
         _shader = shader;
     }
     
@@ -157,6 +139,9 @@ public:
     
     inline void setTexture(const Texture * texture) {
         _texture = texture;
+    }
+    inline void setTextureNormal(const Texture * texture) {
+        _texture_normal = texture;
     }
     
     TextureCube const * getTextureCube() const {
@@ -218,13 +203,14 @@ protected:
     
     static Canvas * s_pCanvas;
     
-    Shader const * _shader;
+    Shader * _shader;
     
     int _bufferSize;
     
     DrawMode _drawMode;
     
     Texture const * _texture;
+    Texture const * _texture_normal;
     
     TextureCube const * _textureCube;
     

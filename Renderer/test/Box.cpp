@@ -34,7 +34,9 @@ void Box::updateTransform(double dt) {
 }
 
 void Box::init() {
+//    _texture = Texture::create("wall.jpg");
     _texture = Texture::create("wooden-crate.jpg");
+    _texture_normal = Texture::create("wall_normal.jpg");
     double a[] = {
         //  X     Y     Z       U     V          Normal
         // bottom
@@ -126,6 +128,7 @@ void Box::init() {
 void Box::draw(Ldouble dt) {
     begin(dt);
     Canvas::getInstance()->setTexture(_texture);
+    Canvas::getInstance()->setTextureNormal(_texture_normal);
     Canvas::getInstance()->drawTrianglesFromVerts(_vertice);
     end();
 }

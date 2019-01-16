@@ -30,6 +30,7 @@ public:
     Ldouble interpolateZ(const VertexOut &target , Ldouble factor) const;
 
     Color color;
+    Vec3 color_normal;
     
     mutable Vec3 normal;
     

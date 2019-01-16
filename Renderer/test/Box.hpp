@@ -30,6 +30,7 @@ public:
 protected:
     
     Texture * _texture;
+    Texture * _texture_normal;
     
     vector<Vertex> _vertice;
 };

@@ -64,6 +64,8 @@ protected:
     Ambient _ambient;
     
     Light _light;
+    
+    Vec3 _Ray;
 };
 
 #endif /* BoxShader_hpp */
